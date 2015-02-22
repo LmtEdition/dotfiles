@@ -14,6 +14,13 @@ DOT_PATH=$(pwd)
 
 # Fish Shell {
   # http://www.fishshell.com
+  if [ ! -d ~/.config/fish ]; then
+      mkdir ~/.config/fish
+  fi
+  if [ ! -d ~/.config/fish/functions ]; then
+      mkdir ~/.config/fish/functions
+  fi
+
   for full_file in $DOT_PATH/fish/*.fish; do
     filename=$(basename "$full_file")
     echo "Linking $full_file to ~/.config/fish/$filename"
@@ -22,6 +29,14 @@ DOT_PATH=$(pwd)
 
   # $ chsh -s /usr/bin/fish
   # $ fish_config to set classic+git prompt and solarized dark theme
+
+  # Download z.fish for smarter change directory
+  # https://github.com/roryokane/z-fish to ~/.config/fish/functions/z.fish
+  for full_file in $DOT_PATH/fish/functions/*.fish; do
+    filename=$(basename "$full_file")
+    echo "Linking $full_file to ~/.config/fish/functions/$filename"
+    ln -s "$full_file" ~/.config/fish/functions/$filename
+  done
 # }
 
 
