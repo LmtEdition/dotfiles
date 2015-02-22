@@ -19,6 +19,9 @@ DOT_PATH=$(pwd)
     echo "Linking $full_file to ~/.config/fish/$filename"
     ln -s "$full_file" ~/.config/fish/$filename
   done
+
+  # $ chsh -s /usr/bin/fish
+  # $ fish_config to set classic+git prompt and solarized dark theme
 # }
 
 
@@ -50,7 +53,7 @@ DOT_PATH=$(pwd)
   # }
 
   # Solarized for vim {
-    # https://github.com/altercation/solarized/blob/master/vim-colors-solarized/colors/solarized.vim
+    # https://github.com/altercation/solarized/blob/master/vim-colors-solarized/
   # }
 # }
 
@@ -61,19 +64,16 @@ DOT_PATH=$(pwd)
 
 
 # Vim {
-    # Run ctags -R to create tags file.
-    #$ sudo apt-get install exuberant-ctags
+  # Use vim-plug manager https://github.com/junegunn/vim-plug
 
-    # Powerline fonts for vim-airline
-    # Run the install.sh script and set the terminal's profile to use
-    # the powerline font.
-    #git clone https://github.com/powerline/fonts.git ~/fonts.git
+  # Run ctags -R to create tags file.
+  #$ sudo apt-get install exuberant-ctags
 
-    # Ag - faster grep
-    # $ sudo apt-get install silversearcher-ag
+  # Powerline fonts for vim-airline
+  # Run the install.sh script and set the terminal's profile to use
+  # the powerline font.
+  #git clone https://github.com/powerline/fonts.git ~/fonts.git
 
-    # Symlink colorschemes to ~/.vim/colors
-    full_file="$DOT_PATH/vim/colors"
-    echo "Linking $full_file to ~/.vim/colors"
-    ln -s "$full_file" ~/.vim/
+  # Ag - faster grep
+  # $ sudo apt-get install silversearcher-ag
 # }

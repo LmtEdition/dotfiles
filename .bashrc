@@ -165,6 +165,24 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
-# Add ~/algs4/bin to the PATH
+# set PATH so it includes MacPorts sbin if it exists
+if [ -d "/opt/local/sbin" ] ; then
+   export PATH="/opt/local/sbin:$PATH"
+fi
+
+if [ -d "/opt/local/bin" ] ; then
+   export PATH="/opt/local/bin:$PATH"
+fi
+
+if [ -d "/opt/local/libexec/gnubin" ] ; then
+   export PATH="/opt/local/libexec/gnubin:$PATH"
+fi
+
+if [ -d "$HOME/bin" ] ; then
+   export PATH="$HOME/bin:$PATH"
+fi
+
 # For princeton algorithms course on coursera
-export PATH=$PATH:$HOME/Dropbox/Coursera/princeton_algorithms/bin
+if [ -d "$HOME/Dropbox/Coursera/princeton_algorithms/bin" ] ; then
+  export PATH=$PATH:$HOME/Dropbox/Coursera/princeton_algorithms/bin
+fi

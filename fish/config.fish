@@ -44,7 +44,7 @@ set -xU LS_COLORS "no=00:fi=00:di=34:ow=34;40:ln=35:pi=30;44:so=35;44:do=35;44:b
 set -x GREP_OPTIONS "--color=auto"
 set -x GREP_COLOR "3;33"
 
-set -x LESS "--ignore-case"
+set -x LESS "--ignore-case --raw-control-chars"
 set -x EDITOR "vim"
 
 set -x LC_ALL en_US.UTF-8
@@ -55,5 +55,9 @@ if [ -z $TMUX ]; and [ -d "$HOME/Dropbox/Coursera/princeton_algorithms" ]
   set -x PATH $HOME/Dropbox/Coursera/princeton_algorithms/bin $PATH
 end
 
+# Set vi-keybindings
+set -g fish_key_bindings fish_vi_key_bindings
+
 source $HOME/.config/fish/aliases.fish
 source $HOME/.config/fish/solarized.fish
+
