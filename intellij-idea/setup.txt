@@ -1,0 +1,21 @@
+Change font:
+    IDE Settings > Appearance > Override default fonts by (not recommended):
+        Name: Monospaced.plain
+        Size: 18
+    IDE Settings > Editor > Colors & Fonts
+        Scheme name: Save As: Stan
+        > Font > Size: 16
+
+Get ideavim:
+    IDE Settings > Plugins > Browse repositories > Search for ideavim >
+        Install and restart
+
+Add jar file to project:
+    File > Project Structure > Libraries > Add
+
+Add ant build.xml:
+    Right click build.xml set as ant build.
+
+Line numbers:
+    IDE Settings > Editor > Appearance > Show line numbers
+

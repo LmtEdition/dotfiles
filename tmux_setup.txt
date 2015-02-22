@@ -1,0 +1,30 @@
+-Download tmux tar
+    -http://tmux.sourceforge.net/
+
+-Download libevent
+    -http://libevent.org/
+
+-Install libevent (see README)
+
+-Install tmux
+    -may need to soft link some files
+    -sudo ln -s /usr/local/lib/libevent-2.0.so.5 /usr/lib/libevent-2.0.so.5
+
+-Configure putty
+    -If really old os, and backspace in tmux causes problems:
+        -Terminal > Keyboard > Backspace key > Control-H
+    -If no xterm-256color, try xterm-color
+        -Connection > Data > Terminal-type string > xterm-color
+
+-Configure .bashrc
+    -if vim shows up with weird colors inside tmux, force tmux to use screen-256color
+colors
+    -alias tmux='tmux -2'
+    -http://stackoverflow.com/questions/10158508/lose-vim-colorscheme-in-tmux-mode
+
+-Configure .tmux.conf
+    -set -g default-terminal "xterm-color"
+
+-Configure .vimrc
+    -colorscheme mustang and set t_Co=256 needs to be placed below certain settings to show up properly
+

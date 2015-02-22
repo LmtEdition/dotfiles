@@ -1,0 +1,305 @@
+" ======== Stan's Windows vimrc ========
+" This must be first to enable vim enhancements
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/vimfiles/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required!
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
+Bundle 'kien/ctrlp.vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'bling/vim-airline'
+Bundle 'tpope/vim-surround'
+Bundle 'mhinz/vim-startify'
+Bundle 'SirVer/ultisnips'
+Bundle 'Yggdroot/indentLine'
+Bundle 'Raimondi/delimitMate'
+"Bundle 'jistr/vim-nerdtree-tabs'
+"Bundle 'myusuf3/numbers.vim'
+"Bundle 'Lokaltog/powerline'
+"
+" original repos on github
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'tpope/vim-fugitive'
+"Bundle 'tpope/vim-rails.git'
+"Bundle 'Lokaltog/vim-easymotion'
+" vim-scripts repos
+"Bundle 'L9'
+"Bundle 'FuzzyFinder'
+" non github repos
+"Bundle 'git://git.wincent.com/command-t.git'
+" ...
+
+filetype plugin indent on     " required!
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+
+" Do syntax checks when buffers are first loaded as well as on saving
+let g:syntastic_check_on_open = 1
+
+" Allow ultisnips work with youcompleteme
+let g:UltiSnipsExpandTrigger="<c-j>"
+
+" Allow ultisnips to list snippets
+let g:UltiSnipsListSnippets="<c-l>"
+
+" IndentLine vertical line indentation
+let g:indentLine_color_term = 239
+"let g:indentLine_color_gui = '#09AA08'
+let g:indentLine_color_gui = '#4e4e4e'
+let g:indentLine_char = '│'
+"let g:indentLine_char = '┊'
+
+" Expand on return key so that the next line is indented on enter
+let delimitMate_expand_cr = 1
+
+" Show tabline at top of tabs or buffers
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#fnamemod = ':t'
+
+"----------Default Settings--------------"
+
+source $VIMRUNTIME/vimrc_example.vim
+"source $VIMRUNTIME/mswin.vim
+behave mswin
+
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
+" Map C-q to paste for windows
+"map <C-q> paste
+
+"----------Default Settings--------------"
+"
+" ======== Paths ========
+" Default path upon opening a file
+cd D:\vimFiles
+
+" Backup Directory
+"set backupdir=~/vimtmp,.
+"set directory=~/vimtmp,.
+set backup
+set backupdir=D:\vimFiles,.
+set directory=D:\vimFiles,.
+set writebackup
+
+" Current Directory
+set autochdir
+
+" ======== General Configs ========
+syntax enable
+set spelllang=en_us
+set history=1000 " More history
+set undolevels=1000  " Use a lot of levels of undo
+set showmatch " Shows matching parentheses
+set matchtime=0 " Sets match time, 0 for instant
+set showcmd " Shows info on current command
+set showmode " Show Insert, Replace, Visual mode on status line
+set number " Show line numbers in VIM
+set relativenumber " Show line numbers relative to current line
+set ruler " Show column numbers
+set title " Set terminal title
+set encoding=utf-8 " Set terminal enconding to utf8
+set backspace=indent,eol,start "Allow backsapce in insert mode
+set hidden " Allow switching edited buffers without saving
+set textwidth=120 " Wrap text on column 120
+set laststatus=2 " Last window will always show status line
+set lines=25
+set columns=100
+
+" ======== Search Settings ========
+"set nohlsearch " Don't highlight search items
+set hlsearch " Highlight search terms
+set incsearch " Search dynamically as typed
+set ignorecase " Case insensitive
+set smartcase " Search case sensitive only when capitalized keyword
+
+" ======== Indentation ========
+"set autoindent "copy indentation of previous line
+" Turn off smartindent and cindent if filetype indent is on
+"set smartindent " one level extra indentation in some cases
+"set cindent " More customizable for c like syntax
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4 " Will jump by tabs instead of spaces
+set shiftround " Indenting with < and > will align to multiples of shiftwidth
+set expandtab
+
+" ======= White Spaces ========
+" Highlight whitespaces for tabs, trailing whitespace, and invisible spaces
+" Uses '...' to denote whitespaces
+" Use # sign at the end of lines to mark lines that extend off-screen
+set list
+set listchars=tab:>.,trail:.,extends:#,nbsp:.
+
+"turn off autocommenting on newlines, doesn't work because filetype overwrites
+"when loaded afterwards
+set formatoptions-=ro
+
+" ======== Timeout ========
+" Time out on key codes but not mappings.
+" Basically this makes terminal Vim work sanely.
+set notimeout
+set ttimeout
+set ttimeoutlen=100
+
+" ======== Folds ========
+set foldmethod=indent   " Fold based on indentation
+set foldnestmax=5       " Deepest fold is 5 levels
+set nofoldenable        " Dont fold by default
+
+" ======== Scrolling ========
+set scrolloff=5     " Start scrolling when we're 5 lines away from margins
+set sidescrolloff=15
+set sidescroll=1
+
+" ======== Font ========
+"set cursorline " Cursorline is bad in terminal vim, can't see underlines _
+" Fixes underline problem in terminal
+highlight CursorLine term=NONE cterm=NONE
+
+set guifont=Consolas:h11:cANSI
+
+" 256 color setting, can do it here or in .bashrc 'export TERM="xterm-256color"'
+if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
+    set t_Co=256
+endif
+
+" Colors if terminal support 256 colors or in GVIM
+if &t_Co >= 256 || has("gui_running")
+   colorscheme slime-contrast
+endif
+
+" Sets a column border
+set colorcolumn=81
+" Shades all columns to the right of the colorcolumn
+"execute "set colorcolumn=" . join(range(81,335), ',')
+"highlight ColorColumn ctermbg=DarkGray guibg=DarkGray
+"highlight ColorColumn ctermbg=cyan1 guibg=cyan1
+if has("gui_running")
+    highlight ColorColumn guibg=DarkSlateBlue
+else
+    highlight ColorColumn ctermbg=DarkSlateBlue
+endif
+
+" ======== Shortcut Mappings ========
+" Change the mapleader from \ to ,
+let mapleader=","
+
+" Buffer management
+" Opens a new buffer with the current buffer's path
+map <leader>e :edit <c-r>=expand("%:p:h")<CR>/
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<CR>:pwd<CR>
+
+" Close the current buffer
+map <leader>d :bd<CR>
+
+" Close all the buffers
+map <leader>bw :1,1000 bd!<CR>
+
+" Show a selectable list of buffers
+map gb :ls<CR>:buffer<Space>
+
+" Easy buffer switching
+map <leader>n :bn<CR>
+map <leader>p :bp<CR>
+
+" Toggle NERDTree
+nmap <leader>d :NERDTreeToggle<CR>
+
+" Toggle between last open buffers
+nnoremap <leader>6 <C-^>
+
+" Toggle paste mode with F2 in both normal and insert mode.
+" For pasting, so vim won't add incremented tabs on each line.
+" set paste will mess up indentation when on
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+
+" Instead of <shift>-; can just type ;
+nnoremap ; :
+" Regain searching functionality with ; for f or t
+noremap ;; ;
+
+" Instead of jumping over current line, jump to next row in editor
+" If long lines are wrapped, don't jump over them
+nnoremap j gj
+nnoremap k gk
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+" C-\ - Open the definition in a new tab
+" A-] - Open the definition in a vertical split " doesn't work?
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+" Use Q for formatting the current paragraph (or selection)
+vmap Q gq
+nmap Q gqap
+
+" Clears highlighted searches with ,/
+nmap <silent> <leader>/ :nohlsearch<CR>
+
+" Toggle wrap modes on and off
+nmap <leader>l :setlocal wrap!<CR>:setlocal wrap?<CR>
+
+" Switch between popular and unpopular tab modes
+nmap <leader>t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+nmap <leader>T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+nmap <leader>M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
+nmap <leader>m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+
+" Remove trailing whitespace
+nmap <leader>w gg=G:retab<CR>:%s/\s\+$//g<CR>
+
+" For local replace
+nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
+
+" For global replace
+nnoremap gR gD:%s/<C-R>///gc<left><left><left>
+
+" Toggle spell check
+nnoremap <leader>s :set spell!<CR>
+
