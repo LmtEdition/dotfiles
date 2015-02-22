@@ -60,6 +60,10 @@ DOT_PATH=$(pwd)
     # eval `dircolors ~/.dir_colors/dircolors.256dark`
   # }
 
+  # Solarized for OSX {
+    # https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized
+  # }
+
   # Solarized for tmux {
     # https://github.com/altercation/solarized/tree/master/tmux
   # }
