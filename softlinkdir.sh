@@ -3,4 +3,4 @@
 src=$1
 dst=$2
 
-ln -s $src $dst && ls -l $dst
+ln -sv $src $dst && ls -l $dst
