@@ -5,9 +5,8 @@ DOT_PATH=$(pwd)
 
 # Dot files {
   for full_file in $DOT_PATH/.[^.]*; do
-      filename=$(basename "$full_file")
-      echo "Linking $full_file to ~/$filename"
-      ln -s "$full_file" ~/$filename
+    filename=$(basename "$full_file")
+    ln -sv "$full_file" ~/$filename
   done
 # }
 
@@ -23,8 +22,7 @@ DOT_PATH=$(pwd)
 
   for full_file in $DOT_PATH/fish/*.fish; do
     filename=$(basename "$full_file")
-    echo "Linking $full_file to ~/.config/fish/$filename"
-    ln -s "$full_file" ~/.config/fish/$filename
+    ln -sv "$full_file" ~/.config/fish/$filename
   done
 
   # $ chsh -s /usr/bin/fish
@@ -34,8 +32,7 @@ DOT_PATH=$(pwd)
   # https://github.com/roryokane/z-fish to ~/.config/fish/functions/z.fish
   for full_file in $DOT_PATH/fish/functions/*.fish; do
     filename=$(basename "$full_file")
-    echo "Linking $full_file to ~/.config/fish/functions/$filename"
-    ln -s "$full_file" ~/.config/fish/functions/$filename
+    ln -sv "$full_file" ~/.config/fish/functions/$filename
   done
 # }
 

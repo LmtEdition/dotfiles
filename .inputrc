@@ -1,1 +1,16 @@
+# See: https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789
+# Make Tab autocomplete regardless of filename case
+#set completion-ignore-case on
+
+# List all matches in case multiple possible completions are possible
+set show-all-if-ambiguous on
+
+# Flip through autocompletion matches with Shift-Tab.
+"\e[Z": menu-complete
+
+# Filtered history search with arrow up and arrow down
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# Use vi-mode
 set editing-mode vi
