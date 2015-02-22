@@ -37,7 +37,7 @@ DOT_PATH=$(pwd)
 # }
 
 
-# OSX - Homebrew, iTerm2, MacVim {
+# OSX - Homebrew, Homebrew Cask, iTerm2, MacVim {
 # }
 
 
