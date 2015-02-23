@@ -118,6 +118,11 @@ DOT_PATH=$(pwd)
 # Vim {
   # Use vim-plug manager https://github.com/junegunn/vim-plug
 
+  # Create undodir if it doesn't exist
+  if [ ! -d ~/.vim/undodir ]; then
+      mkdir ~/.vim/undodir
+  fi
+
   # Run ctags -R to create tags file.
   if [ $(uname) == "Darwin" ]; then
      brew install ctags-exuberant

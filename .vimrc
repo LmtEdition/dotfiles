@@ -544,7 +544,7 @@ filetype plugin indent on    " required
 " vim-tmuxify - bridge between vim and tmux {
     if isdirectory(expand("~/.vim/plugged/vim-tmuxify"))
       " Custom tmux create command
-      let g:tmuxify_custom_command = 'tmux split-window -d -p 20'
+      let g:tmuxify_custom_command = 'tmux split-window -d -p 30'
     endif
 " }
 
