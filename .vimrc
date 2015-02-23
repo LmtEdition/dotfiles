@@ -46,6 +46,7 @@ filetype plugin indent on    " required
 
 
 " General {
+    set shell=/bin/bash  " Fish is non POSIX compatible; for plugin support
     function! GetRunningOS()
       if has("win32")
         return "Windows"
@@ -61,7 +62,6 @@ filetype plugin indent on    " required
     let os=GetRunningOS()
 
     syntax enable        " Syntax highlighting
-    set shell=/bin/bash  " Fish is non POSIX compatible; for plugin support
     set background=dark  " Assume a dark background
     "set mouse=a          " Automatically enable mouse usage, I don't know why this is useful
     set mousehide        " Hide the mouse cursor while typing
@@ -182,9 +182,9 @@ filetype plugin indent on    " required
         if os=="Darwin"
           set fullscreen " Start graphical vim in full screen mode
 
-          set guifont=Source\ Code\ Pro\ For\ Powerline\ Semibold\ 14
+          set guifont=Sauce\ Code\ Powerline\ Semibold:h14
         else
-          set guifont=Source\ Code\ Pro\ For\ Powerline\ Semi-Bold\ 14
+          set guifont=Source\ Code\ Pro\ for\ Powerline\ Semi-Bold\ 14
         endif
 
         "set guioptions-=T " Remove the toolbar
