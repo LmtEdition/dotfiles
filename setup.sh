@@ -4,6 +4,7 @@
 DOT_PATH=$(pwd)
 
 # Dot files {
+  # bashrc file
   if [ $(uname) == "Darwin" ]; then
     # Mac OS X platform
     full_file=$DOT_PATH/_osxbashrc
@@ -13,6 +14,7 @@ DOT_PATH=$(pwd)
   fi
   ln -sv "$full_file" ~/.bashrc
 
+  # Symlink dot files, excluding the .git repo
   for full_file in $DOT_PATH/.[^.]*; do
     filename=$(basename "$full_file")
     if [ "$filename" != ".git" ]; then
@@ -24,6 +26,17 @@ DOT_PATH=$(pwd)
 
 # Fish Shell {
   # http://www.fishshell.com
+  # Nightly builds - latest version https://github.com/fish-shell/fish-shell/wiki/Nightly-builds
+  if [ $(uname) == "Darwin" ]; then
+    brew install fish --HEAD
+    chsh -s $HOME/homebrew/bin/fish
+  elif [ $(uname) == "Linux" ]; then
+    sudo add-apt-repository ppa:fish-shell/nightly-master
+    sudo apt-get update
+    sudo apt-get install fish
+    chsh -s /usr/bin/fish
+  fi
+
   if [ ! -d ~/.config ]; then
       mkdir ~/.config
   fi
@@ -34,16 +47,17 @@ DOT_PATH=$(pwd)
       mkdir ~/.config/fish/functions
   fi
 
+  # fish config files
   for full_file in $DOT_PATH/fish/*.fish; do
     filename=$(basename "$full_file")
     ln -sv "$full_file" ~/.config/fish/$filename
   done
 
-  # $ chsh -s /usr/bin/fish
   # $ fish_config to set classic+git prompt and solarized dark theme
 
   # Download z.fish for smarter change directory
   # https://github.com/roryokane/z-fish to ~/.config/fish/functions/z.fish
+  # fish function files
   for full_file in $DOT_PATH/fish/functions/*.fish; do
     filename=$(basename "$full_file")
     ln -sv "$full_file" ~/.config/fish/functions/$filename
@@ -53,7 +67,9 @@ DOT_PATH=$(pwd)
 
 # OSX - Homebrew, Homebrew Cask, iTerm2, MacVim {
   # Turn off system sound at startup
-  # sudo nvram SystemAudioVolume=%80
+  if [ $(uname) == "Darwin" ]; then
+    sudo nvram SystemAudioVolume=%80
+  fi
 # }
 
 
@@ -91,7 +107,11 @@ DOT_PATH=$(pwd)
 
 
 # Tmux {
-  # $ sudo apt-get install tmux
+  if [ $(uname) == "Darwin" ]; then
+    brew install tmux
+  elif [ $(uname) == "Linux" ]; then
+    sudo apt-get install tmux
+  fi
 # }
 
 
@@ -99,7 +119,11 @@ DOT_PATH=$(pwd)
   # Use vim-plug manager https://github.com/junegunn/vim-plug
 
   # Run ctags -R to create tags file.
-  #$ sudo apt-get install exuberant-ctags
+  if [ $(uname) == "Darwin" ]; then
+     brew install ctags-exuberant
+  elif [ $(uname) == "Linux" ]; then
+    sudo apt-get install exuberant-ctags
+  fi
 
   # Powerline fonts for vim-airline
   # Run the install.sh script and set the terminal's profile to use
@@ -107,5 +131,9 @@ DOT_PATH=$(pwd)
   #git clone https://github.com/powerline/fonts.git ~/fonts.git
 
   # Ag - faster grep
-  # $ sudo apt-get install silversearcher-ag
+  if [ $(uname) == "Darwin" ]; then
+    brew install the_silver_searcher
+  elif [ $(uname) == "Linux" ]; then
+    sudo apt-get install silversearcher-ag
+  fi
 # }

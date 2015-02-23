@@ -13,6 +13,10 @@ if [ -z $TMUX ]; and [ -d "/opt/local/libexec/gnubin" ]
   set -x PATH "/opt/local/libexec/gnubin" $PATH
 end
 
+if [ -z $TMUX ]; and [ -d "$HOME/homebrew/bin" ]
+  set -x PATH "$HOME/homebrew/bin" $PATH
+end
+
 if [ -z $TMUX ]; and [ -d "$HOME/bin" ]
   set -x PATH "$HOME/bin" $PATH
 end
