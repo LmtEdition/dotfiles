@@ -180,6 +180,7 @@ filetype plugin indent on    " required
     " Colors if terminal support 256 colors or in GVIM
     if &t_Co >= 256 || has('gui_running')
         colorscheme solarized
+        highlight clear SignColumn " solarized has bad sign column color
     endif
 
     " Sets a column border
