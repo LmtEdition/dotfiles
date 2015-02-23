@@ -46,6 +46,20 @@ filetype plugin indent on    " required
 
 
 " General {
+    function! GetRunningOS()
+      if has("win32")
+        return "Windows"
+      endif
+      if has("unix")
+        if system('uname')=~'Darwin'
+          return "Darwin"
+        else
+          return "Linux"
+        endif
+      endif
+    endfunction
+    let os=GetRunningOS()
+
     syntax enable        " Syntax highlighting
     set shell=/bin/bash  " Fish is non POSIX compatible; for plugin support
     set background=dark  " Assume a dark background
@@ -165,8 +179,14 @@ filetype plugin indent on    " required
     "highlight nonText ctermbg=NONE
 
     if has('gui_running')
-        "set guifont=Droid\ Sans\ Mono\ 12
-        set guifont=Source\ Code\ Pro\ For\ Powerline\ Semi-Bold\ 14
+        if os=="Darwin"
+          set fullscreen " Start graphical vim in full screen mode
+
+          set guifont=Source\ Code\ Pro\ For\ Powerline\ Semibold\ 14
+        else
+          set guifont=Source\ Code\ Pro\ For\ Powerline\ Semi-Bold\ 14
+        endif
+
         "set guioptions-=T " Remove the toolbar
         set lines=40      " 40 lines of text instead of 24
     else
