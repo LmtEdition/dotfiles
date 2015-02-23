@@ -12,8 +12,8 @@ fi
   git config --global user.name "Stanley Xu"
 # }
 # Global ignore {
-  mkdir -p ~/.config/git
-  cp .gitignore_global ~/.gitignore_global
+  # ./setup.sh should symlink the file already
+  #cp .gitignore_global ~/.gitignore_global
 
   git config --global core.excludesfile '~/.gitignore_global'
 # }
