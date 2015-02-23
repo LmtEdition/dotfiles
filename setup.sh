@@ -4,15 +4,29 @@
 DOT_PATH=$(pwd)
 
 # Dot files {
+  if [ $(uname) == "Darwin" ]; then
+    # Mac OS X platform
+    full_fille=$DOT_PATH/_osxbashrc
+  elif [ $(uname) == "Linux" ]; then
+    # Linux platform
+    full_file=$DOT_PATH/_linuxbashrc
+  fi
+  ln -sv "$full_file" ~/.bashrc
+
   for full_file in $DOT_PATH/.[^.]*; do
     filename=$(basename "$full_file")
-    ln -sv "$full_file" ~/$filename
+    if [ "$filename" != ".git" ]; then
+      ln -sv "$full_file" ~/$filename
+    fi
   done
 # }
 
 
 # Fish Shell {
   # http://www.fishshell.com
+  if [ ! -d ~/.config ]; then
+      mkdir ~/.config
+  fi
   if [ ! -d ~/.config/fish ]; then
       mkdir ~/.config/fish
   fi
@@ -38,6 +52,8 @@ DOT_PATH=$(pwd)
 
 
 # OSX - Homebrew, Homebrew Cask, iTerm2, MacVim {
+  # Turn off system sound at startup
+  # sudo nvram SystemAudioVolume=%80
 # }
 
 
