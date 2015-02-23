@@ -165,7 +165,10 @@ if [ -d "/opt/local/libexec/gnubin" ] ; then
    export PATH="/opt/local/libexec/gnubin:$PATH"
 fi
 
+if [ -d "$HOME/homebrew/bin" ]; then
+  export PATH="$HOME/homebrew/bin:$PATH"
+fi
+
 if [ -d "$HOME/bin" ] ; then
    export PATH="$HOME/bin:$PATH"
 fi
-

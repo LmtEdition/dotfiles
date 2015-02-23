@@ -6,7 +6,7 @@ DOT_PATH=$(pwd)
 # Dot files {
   if [ $(uname) == "Darwin" ]; then
     # Mac OS X platform
-    full_fille=$DOT_PATH/_osxbashrc
+    full_file=$DOT_PATH/_osxbashrc
   elif [ $(uname) == "Linux" ]; then
     # Linux platform
     full_file=$DOT_PATH/_linuxbashrc
