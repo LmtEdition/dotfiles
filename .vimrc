@@ -497,7 +497,7 @@ filetype plugin indent on    " required
 
 " vim-colors-solarized - Solarized colorscheme {
     if isdirectory(expand("~/.vim/plugged/vim-colors-solarized/"))
-      call togglebg#map("")
+      call togglebg#map("") " <F-5> to toggle betwee solarized light/dark
     endif
 "}
 
