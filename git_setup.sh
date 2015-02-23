@@ -13,16 +13,14 @@ fi
 # }
 # Global ignore {
   mkdir -p ~/.config/git
-  cp ignore ~/.config/git/ignore
+  cp .gitignore_global ~/.gitignore_global
 
-  git config --global core.excludesfile '~/.config/git/ignore'
+  git config --global core.excludesfile '~/.gitignore_global'
 # }
 
 # Global hooks for auto ctags
   # See http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
-  if [ ! -d ~/.git_template ]; then
-      mkdir ~/.git_template
-  fi
+  mkdir -p ~/.git_template
 
   cp -r ./hooks/ ~/.git_template/
 

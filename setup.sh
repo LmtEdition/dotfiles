@@ -37,15 +37,8 @@ DOT_PATH=$(pwd)
     chsh -s /usr/bin/fish
   fi
 
-  if [ ! -d ~/.config ]; then
-      mkdir ~/.config
-  fi
-  if [ ! -d ~/.config/fish ]; then
-      mkdir ~/.config/fish
-  fi
-  if [ ! -d ~/.config/fish/functions ]; then
-      mkdir ~/.config/fish/functions
-  fi
+  # Create fish config directories
+  mkdir -p ~/.config/fish/functions
 
   # fish config files
   for full_file in $DOT_PATH/fish/*.fish; do
@@ -119,9 +112,7 @@ DOT_PATH=$(pwd)
   # Use vim-plug manager https://github.com/junegunn/vim-plug
 
   # Create undodir if it doesn't exist
-  if [ ! -d ~/.vim/undodir ]; then
-      mkdir ~/.vim/undodir
-  fi
+  mkdir -p ~/.vim/undodir
 
   # Run ctags -R to create tags file.
   if [ $(uname) == "Darwin" ]; then
