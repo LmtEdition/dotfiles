@@ -1,5 +1,12 @@
 #!/bin/bash
 # Set up dot files on ~/ directory.
+FRESH_INSTALL=false
+if [ "$1" == "new" ]; then
+  FRESH_INSTALL=true
+elif [ ! -z "$1" ]; then
+  echo "Usage: ./setup.sh [new]...............[new] if you want fresh install"
+  exit
+fi
 
 DOT_PATH=$(pwd)
 
@@ -18,7 +25,7 @@ DOT_PATH=$(pwd)
   for full_file in $DOT_PATH/.[^.]*; do
     filename=$(basename "$full_file")
     if [ "$filename" != ".git" ]; then
-      ln -sv "$full_file" ~/$filename
+      ln -sv "$full_file" ~/
     fi
   done
 # }
@@ -27,14 +34,16 @@ DOT_PATH=$(pwd)
 # Fish Shell {
   # http://www.fishshell.com
   # Nightly builds - latest version https://github.com/fish-shell/fish-shell/wiki/Nightly-builds
-  if [ $(uname) == "Darwin" ]; then
-    brew install fish --HEAD
-    chsh -s $HOME/homebrew/bin/fish
-  elif [ $(uname) == "Linux" ]; then
-    sudo add-apt-repository ppa:fish-shell/nightly-master
-    sudo apt-get update
-    sudo apt-get install fish
-    chsh -s /usr/bin/fish
+  if [ "$FRESH_INSTALL" = true ]; then
+    if [ $(uname) == "Darwin" ]; then
+      brew install fish --HEAD
+      chsh -s $HOME/homebrew/bin/fish
+    elif [ $(uname) == "Linux" ]; then
+      sudo add-apt-repository ppa:fish-shell/nightly-master
+      sudo apt-get update
+      sudo apt-get install fish
+      chsh -s /usr/bin/fish
+    fi
   fi
 
   # Create fish config directories
@@ -60,8 +69,10 @@ DOT_PATH=$(pwd)
 
 # OSX - Homebrew, Homebrew Cask, iTerm2, MacVim {
   # Turn off system sound at startup
-  if [ $(uname) == "Darwin" ]; then
-    sudo nvram SystemAudioVolume=%80
+  if [ "$FRESH_INSTALL" = true ]; then
+    if [ $(uname) == "Darwin" ]; then
+      sudo nvram SystemAudioVolume=%80
+    fi
   fi
 # }
 
@@ -70,11 +81,13 @@ DOT_PATH=$(pwd)
   # https://github.com/altercation/solarized
   # Solarized dark for Gnome terminal {
     # Create a new user profile named 'solarized'.
+    # Select the dark theme.
     # https://github.com/Anthony25/gnome-terminal-colors-solarized
-    # $ git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git
-    # $ sudo apt-get install dconf-cli
-    # $ cd gnome-terminal-colors-solarized/
-    # $ ./install.sh
+    if [ "$FRESH_INSTALL" = true ] && [ $(uname) == "Linux" ]; then
+      git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git
+      sudo apt-get install dconf-cli
+      cd ~/gnome-terminal-colors-solarized/ && ./install.sh
+    fi
   # }
 
   # Solarized for GNU ls {
@@ -83,6 +96,7 @@ DOT_PATH=$(pwd)
     # Link the file to ~/.dir_colors and include the following line in
     # your ~/.profile (bash) or ~/.zshrc (zsh)
     # eval `dircolors ~/.dir_colors/dircolors.256dark`
+    # Note: I now include the file in my dotfiles repo and symlink it.
   # }
 
   # Solarized for OSX {
@@ -91,19 +105,23 @@ DOT_PATH=$(pwd)
 
   # Solarized for tmux {
     # https://github.com/altercation/solarized/tree/master/tmux
+    # Included in my .tmux.conf file.
   # }
 
   # Solarized for vim {
     # https://github.com/altercation/solarized/blob/master/vim-colors-solarized/
+    # Included in my .vimrc plugin manager.
   # }
 # }
 
 
 # Tmux {
-  if [ $(uname) == "Darwin" ]; then
-    brew install tmux
-  elif [ $(uname) == "Linux" ]; then
-    sudo apt-get install tmux
+  if [ $"FRESH_INSTALL" = true ]; then
+    if [ $(uname) == "Darwin" ]; then
+      brew install tmux
+    elif [ $(uname) == "Linux" ]; then
+      sudo apt-get install tmux
+    fi
   fi
 # }
 
@@ -115,21 +133,28 @@ DOT_PATH=$(pwd)
   mkdir -p ~/.vim/undodir
 
   # Run ctags -R to create tags file.
-  if [ $(uname) == "Darwin" ]; then
-     brew install ctags-exuberant
-  elif [ $(uname) == "Linux" ]; then
-    sudo apt-get install exuberant-ctags
+  if [ $"FRESH_INSTALL" = true ]; then
+    if [ $(uname) == "Darwin" ]; then
+      brew install ctags-exuberant
+    elif [ $(uname) == "Linux" ]; then
+      sudo apt-get install exuberant-ctags
+    fi
   fi
 
   # Powerline fonts for vim-airline
   # Run the install.sh script and set the terminal's profile to use
   # the powerline font.
-  #git clone https://github.com/powerline/fonts.git ~/fonts.git
+  if [ $"FRESH_INSTALL" = true ]; then
+    git clone https://github.com/powerline/fonts.git ~/fonts.git
+    cd ~/fonts.git && ./install.sh
+  fi
 
   # Ag - faster grep
-  if [ $(uname) == "Darwin" ]; then
-    brew install the_silver_searcher
-  elif [ $(uname) == "Linux" ]; then
-    sudo apt-get install silversearcher-ag
+  if [ $"FRESH_INSTALL" = true ]; then
+    if [ $(uname) == "Darwin" ]; then
+      brew install the_silver_searcher
+    elif [ $(uname) == "Linux" ]; then
+      sudo apt-get install silversearcher-ag
+    fi
   fi
 # }
