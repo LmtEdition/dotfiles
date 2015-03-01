@@ -221,7 +221,7 @@ filetype plugin indent on    " required
     " Change the mapleader from default \ to ,
     let mapleader=','
 
-    " Copy visual vim text with "+y
+    " Copy visual vim text to system clipboard with "+y
     vnoremap <leader>y "+y
 
     " Easier window navigation
