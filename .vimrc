@@ -24,6 +24,7 @@ Plug 'ap/vim-css-color'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-repeat'
 Plug 'honza/vim-snippets'
 Plug 'mhinz/vim-startify'
@@ -441,11 +442,16 @@ filetype plugin indent on    " required
     if isdirectory(expand("~/.vim/plugged/syntastic"))
         let g:syntastic_check_on_open = 1 " Syntax check on buffer load and save
 
+        let g:syntastic_aggregate_errors = 1 " Run all checkers for filetype
+
         " Always stick detected errors into location-list
         let g:syntastic_always_populate_loc_list = 1
 
         " Open location-list to display syntax errors
         nmap <leader>lo :lopen<CR>
+
+        " Set javascript checker explicitly, not enabled by default
+        let g:syntastic_javascript_checkers = ['gjslint'] 
     endif
 " }
 
