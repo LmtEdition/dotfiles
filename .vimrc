@@ -25,6 +25,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'pangloss/vim-javascript'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
 Plug 'honza/vim-snippets'
 Plug 'mhinz/vim-startify'
@@ -538,6 +539,24 @@ filetype plugin indent on    " required
         " Toggle gitgutter plugin
         nnoremap <silent> <leader>gg :GitGutterToggle<CR>
     endif
+" }
+
+
+" vim-multiple-cursors - Multiple selections and editing {
+  if isdirectory(expand("~/.vim/plugged/vim-multiple-cursors"))
+    " Behave like g*, no word boundaries
+    let g:multi_cursor_start_key='g<C-n>'
+
+    " Behave like *, use word boundaries
+    let g:multi_cursor_start_word_key='<C-n>'
+
+    " Hitting ESC will go to Normal mode
+    let g:multi_cursor_exit_from_visual_mode=0
+
+    " Hitting ESC will go to Normal mode
+    let g:multi_cursor_exit_from_insert_mode=0
+
+  endif
 " }
 
 
