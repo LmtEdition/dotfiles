@@ -202,8 +202,13 @@ filetype plugin indent on    " required
 
     " Colors if terminal support 256 colors or in GVIM
     if &t_Co >= 256 || has('gui_running')
-        colorscheme solarized
-        highlight clear SignColumn " solarized has bad sign column color
+      " If using ssh, uncomment the following lines to get better colors
+      "if !has('gui_running')
+        "let g:solarized_termtrans=1
+        "let g:solarized_termcolors=256
+      "endif
+      colorscheme solarized
+      highlight clear SignColumn " solarized has bad sign column color
     endif
 
     " Sets a column border
@@ -452,7 +457,7 @@ filetype plugin indent on    " required
         nmap <leader>lo :lopen<CR>
 
         " Set javascript checker explicitly, not enabled by default
-        let g:syntastic_javascript_checkers = ['gjslint'] 
+        let g:syntastic_javascript_checkers = ['gjslint']
     endif
 " }
 
@@ -573,7 +578,7 @@ filetype plugin indent on    " required
 " vim-tmuxify - bridge between vim and tmux {
     if isdirectory(expand("~/.vim/plugged/vim-tmuxify"))
       " Custom tmux create command
-      let g:tmuxify_custom_command = 'tmux split-window -d -p 30'
+      let g:tmuxify_custom_command = 'tmux split-window -d -p 25'
     endif
 " }
 
@@ -598,6 +603,9 @@ filetype plugin indent on    " required
         " If not using YCM's clang semantic completer and want to use
         " Syntastic's gcc checker
         let g:ycm_show_diagnostics_ui = 0
+
+        " If not working in cpp, this makes YCM faster
+        let g:ycm_filetype_specific_completion_to_disable = {'cpp': 1, 'c': 1}
     endif
 " }
 
