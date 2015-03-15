@@ -1,6 +1,6 @@
 --recurse=yes
 --tag-relative=yes
---exclude=.git
+--exclude=.git*
 --exclude=*.swp
 --exclude=*.bak
 --exclude=*.pyc
@@ -8,3 +8,4 @@
 --exclude=*.sln
 --exclude=*.tar.*
 --exclude=tags*
+--exclude=review
