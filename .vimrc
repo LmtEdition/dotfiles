@@ -433,8 +433,12 @@ filetype plugin indent on    " required
     endif
 
     " bind K to grep word under cursor
+    " <C-R><C-W> gives the text under the cursor when on command line
+    " <C-R>" outputs contents in register " when on command line
     nnoremap K :grep! "<C-R><C-W>"<CR>:cw<CR>
+    vnoremap K y:grep! "<C-R>""<CR>:cw<CR>
     nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+    vnoremap <leader>k y:grep! "\b<C-R>"\b"<CR>:cw<CR>
 
     " Define new command to search for provided text and open 'quickfix'
     command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
