@@ -9,3 +9,4 @@
 --exclude=*.tar.*
 --exclude=tags*
 --exclude=review
+--exclude=READONLY
