@@ -524,18 +524,38 @@ filetype plugin indent on    " required
 
 " vim-fugitive - Git wrapper {
     if isdirectory(expand("~/.vim/plugged/vim-fugitive"))
-        nnoremap <silent> <leader>gs :Gstatus<CR>
-        nnoremap <silent> <leader>gd :Gdiff<CR>
-        nnoremap <silent> <leader>gc :Gcommit<CR>
-        nnoremap <silent> <leader>gb :Gblame<CR>
-        nnoremap <silent> <leader>gl :Glog<CR>
-        nnoremap <silent> <leader>gp :Gpush<CR>
-        nnoremap <silent> <leader>gr :Gread<CR>
-        nnoremap <silent> <leader>gw :Gwrite<CR>
-        nnoremap <silent> <leader>ge :Gedit<CR>
+      " Add current file to staging
+      nnoremap <leader>ga :Git add %:p<CR><CR>
 
-        " Mnemonic _i_nteractive
-        nnoremap <silent> <leader>gi :Git add -p %<CR>
+      " Mnemonic _i_nteractive
+      nnoremap <leader>gi :Git add -p %<CR>
+
+      nnoremap <leader>gb :Gblame<CR>
+
+      " Commit using new tab and show diff
+      nnoremap <leader>gc :Gcommit -v -q<CR>
+
+      " Commit current file using new tab and show diff
+      nnoremap <leader>gt :Gcommit -v -q %:p<CR>
+
+      nnoremap <leader>go :Git checkout<SPACE>
+      nnoremap <leader>gd :Gdiff<CR>
+      nnoremap <leader>ge :Gedit<CR>
+      nnoremap <leader>gl :Glog<CR>
+      nnoremap <leader>gm :Gmove<SPACE>
+      nnoremap <leader>gp :Gpush<CR>
+      nnoremap <leader>gr :Gread<CR>
+      nnoremap <leader>gs :Gstatus<CR>
+      nnoremap <leader>gw :Gwrite<CR>
+
+      " Poor man's vim-rooter, git only, using fugitive
+      " http://www.reddit.com/r/vim/comments/2zc8sy/poors_man_vimrooter_git_only_using_fugitive/
+      "Autocmd BufLeave * let b:last_cwd = getcwd()
+      "Autocmd BufEnter * if exists('b:last_cwd')
+                      "\|   execute 'lcd' b:last_cwd
+                      "\| else
+                      "\|   silent! Glcd `=fugitive#repo().tree()`
+                      "\| endif
     endif
 " }
 
