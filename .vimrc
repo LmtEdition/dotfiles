@@ -555,12 +555,12 @@ filetype plugin indent on    " required
 
       " Poor man's vim-rooter, git only, using fugitive
       " http://www.reddit.com/r/vim/comments/2zc8sy/poors_man_vimrooter_git_only_using_fugitive/
-      "Autocmd BufLeave * let b:last_cwd = getcwd()
-      "Autocmd BufEnter * if exists('b:last_cwd')
-                      "\|   execute 'lcd' b:last_cwd
-                      "\| else
-                      "\|   silent! Glcd `=fugitive#repo().tree()`
-                      "\| endif
+      autocmd BufLeave * let b:last_cwd = getcwd()
+      autocmd BufEnter * if exists('b:last_cwd')
+                      \|   execute 'lcd' b:last_cwd
+                      \| else
+                      \|   silent! Glcd
+                      \| endif
     endif
 " }
 
