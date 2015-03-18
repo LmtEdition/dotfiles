@@ -184,10 +184,9 @@ filetype plugin indent on    " required
     if has('gui_running')
         if os=="Darwin"
           set fullscreen " Start graphical vim in full screen mode
-
-          set guifont=Sauce\ Code\ Powerline\ Semibold:h14
+          set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14
         else
-          set guifont=Source\ Code\ Pro\ for\ Powerline\ Semi-Bold\ 14
+          set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Semi-Bold\ 14
         endif
 
         "set guioptions-=T " Remove the toolbar
@@ -202,11 +201,6 @@ filetype plugin indent on    " required
 
     " Colors if terminal support 256 colors or in GVIM
     if &t_Co >= 256 || has('gui_running')
-      " If using ssh, uncomment the following lines to get better colors
-      "if !has('gui_running')
-        "let g:solarized_termtrans=1
-        "let g:solarized_termcolors=256
-      "endif
       colorscheme solarized
       highlight clear SignColumn " solarized has bad sign column color
     endif
@@ -518,6 +512,17 @@ filetype plugin indent on    " required
 " vim-colors-solarized - Solarized colorscheme {
     if isdirectory(expand("~/.vim/plugged/vim-colors-solarized/"))
       call togglebg#map("") " <F-5> to toggle betwee solarized light/dark
+
+      " If using ssh, set terminal properties for better colors
+      function! SolarizedSsh()
+        if !has('gui_running')
+          let g:solarized_termtrans=1
+          let g:solarized_termcolors=256
+          colorscheme solarized
+        endif
+      endfunction
+
+      nnoremap <leader>ssh :call SolarizedSsh()<CR>
     endif
 "}
 

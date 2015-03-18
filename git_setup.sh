@@ -11,6 +11,7 @@ fi
   git config --global user.email "$1"
   git config --global user.name "Stanley Xu"
 # }
+
 # Global ignore {
   # ./setup.sh should symlink the file already
   #cp .gitignore_global ~/.gitignore_global
@@ -18,11 +19,12 @@ fi
   git config --global core.excludesfile '~/.gitignore_global'
 # }
 
+# [DEPRECATED] - Using vim-gutentags now.
 # Global hooks for auto ctags
   # See http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
-  mkdir -p ~/.git_template
+  #mkdir -p ~/.git_template
 
-  cp -r ./hooks/ ~/.git_template/
+  #cp -r ./hooks/ ~/.git_template/
 
-  git config --global init.templatedir '~/.git_template'
+  #git config --global init.templatedir '~/.git_template'
 # }
