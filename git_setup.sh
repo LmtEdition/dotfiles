@@ -10,6 +10,9 @@ fi
 # Global user settings }
   git config --global user.email "$1"
   git config --global user.name "Stanley Xu"
+  git config --global merge.tool vimdiff
+  git config --global merge.conflictstyle diff3
+  git config --global mergetool.prompt false
 # }
 
 # Global ignore {
