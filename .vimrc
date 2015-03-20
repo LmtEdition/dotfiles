@@ -526,7 +526,7 @@ filetype plugin indent on    " required
         colorscheme solarized
         highlight clear SignColumn " solarized has bad sign column color
 
-      " Removes gray backgroun on symbols
+        " Removes gray background on symbols
         call gitgutter#highlight#define_highlights()
       endfunction
 

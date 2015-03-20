@@ -10,9 +10,12 @@ fi
 # Global user settings }
   git config --global user.email "$1"
   git config --global user.name "Stanley Xu"
+
+  # Use vimdiff for merge conflicts.
   git config --global merge.tool vimdiff
   git config --global merge.conflictstyle diff3
   git config --global mergetool.prompt false
+  git config --global mergetool.keepBackup false # Don't keep .orig files.
 # }
 
 # Global ignore {
