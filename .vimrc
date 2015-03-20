@@ -516,9 +516,15 @@ filetype plugin indent on    " required
       " If using ssh, set terminal properties for better colors
       function! SolarizedSsh()
         if !has('gui_running')
-          let g:solarized_termtrans=1
-          let g:solarized_termcolors=256
+          if g:solarized_termtrans == 0
+            let g:solarized_termtrans=1
+            let g:solarized_termcolors=256
+          else
+            let g:solarized_termtrans=0
+            let g:solarized_termcolors=16
+          endif
           colorscheme solarized
+          highlight clear SignColumn " solarized has bad sign column color
         endif
       endfunction
 
