@@ -226,6 +226,15 @@ filetype plugin indent on    " required
     " Copy visual vim text to system clipboard with "+y
     vnoremap <leader>y "+y
 
+    " Yank from cursor to the end of the line, to be consistent with C and D.
+    nnoremap Y y$
+
+    " Unhighlight searches
+    nmap <silent> <leader>/ :nohlsearch<CR>
+
+    " Search for visual selection
+    vnoremap // y/<C-R>"<CR>
+
     " Easier window navigation
     map <C-h> <C-w>h
     map <C-j> <C-w>j
@@ -235,12 +244,6 @@ filetype plugin indent on    " required
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
-
-    " Yank from cursor to the end of the line, to be consistent with C and D.
-    nnoremap Y y$
-
-    " Unhighlight searches
-    nmap <silent> <leader>/ :nohlsearch<CR>
 
     " Find merge conflict markers
     map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
