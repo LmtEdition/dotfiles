@@ -30,6 +30,7 @@ Plug 'tpope/vim-repeat'
 Plug 'honza/vim-snippets'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'mhinz/vim-tmuxify'
 Plug 'Valloric/YouCompleteMe'
 
@@ -83,6 +84,9 @@ filetype plugin indent on    " required
     if has("autocmd")
         au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
+
+    " Set to auto read when a file is changed from the outside
+    set autoread
 
     " Save undo history
     if has('persistent_undo')
