@@ -9,6 +9,7 @@ call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
 Plug 'kien/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
+Plug 'sjl/gundo.vim'
 Plug 'Yggdroot/indentLine'
 "Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdcommenter'
@@ -403,6 +404,19 @@ filetype plugin indent on    " required
 " }
 
 
+" gundo.vim - graphical undo tree {
+    if isdirectory(expand("~/.vim/plugged/gundo.vim"))
+      nnoremap <leader>ut :GundoToggle<CR>
+
+      " Force preview window below current windows for more space
+      let g:gundo_preview_bottom = 1
+
+      " Playback delay in milliseconds
+      let g:gundo_playback_delay = 300
+    endif
+" }
+
+
 " nerdtree - filesystem explorer {
     if isdirectory(expand("~/.vim/plugged/nerdtree"))
         nmap <leader>nt :NERDTreeToggle<CR>
@@ -518,7 +532,7 @@ filetype plugin indent on    " required
 
 " vim-colors-solarized - Solarized colorscheme {
     if isdirectory(expand("~/.vim/plugged/vim-colors-solarized/"))
-      call togglebg#map("") " <F-5> to toggle betwee solarized light/dark
+      call togglebg#map("<F5>") " <F-5> to toggle between solarized light/dark
 
       " If using ssh, set terminal properties for better colors
       function! SolarizedSsh()
