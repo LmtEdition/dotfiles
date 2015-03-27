@@ -62,6 +62,9 @@ end
 # Use ag as the default source for fzf
 set -x FZF_DEFAULT_COMMAND 'ag -l -g ""'
 
+# Use extended-search mode
+set -x FZF_DEFAULT_OPTS "-x"
+
 # Set vi-keybindings
 set -g fish_key_bindings fish_vi_key_bindings
 

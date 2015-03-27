@@ -178,4 +178,7 @@ if [ -f ~/.fzf.bash ] ; then
 
   # Set ag as the default source for fzf
   export FZF_DEFAULT_COMMAND='ag -l -g ""'
+
+  # Use extended-search mode
+  export FZF_DEFAULT_OPTS="-x"
 fi
