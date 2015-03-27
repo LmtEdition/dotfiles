@@ -173,4 +173,9 @@ if [ -d "$HOME/bin" ] ; then
    export PATH="$HOME/bin:$PATH"
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+if [ -f ~/.fzf.bash ] ; then
+  source ~/.fzf.bash
+
+  # Set ag as the default source for fzf
+  export FZF_DEFAULT_COMMAND='ag -l -g ""'
+fi

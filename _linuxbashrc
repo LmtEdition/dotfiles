@@ -186,3 +186,10 @@ fi
 if [ -d "$HOME/Dropbox/Coursera/princeton_algorithms/bin" ] ; then
   export PATH=$PATH:$HOME/Dropbox/Coursera/princeton_algorithms/bin
 fi
+
+if [ -f ~/.fzf.bash ] ; then
+  source ~/.fzf.bash
+
+  # Set ag as the default source for fzf
+  export FZF_DEFAULT_COMMAND='ag -l -g ""'
+fi

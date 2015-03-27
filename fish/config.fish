@@ -59,6 +59,9 @@ if [ -z $TMUX ]; and [ -d "$HOME/Dropbox/Coursera/princeton_algorithms" ]
   set -x PATH $HOME/Dropbox/Coursera/princeton_algorithms/bin $PATH
 end
 
+# Use ag as the default source for fzf
+set -x FZF_DEFAULT_COMMAND 'ag -l -g ""'
+
 # Set vi-keybindings
 set -g fish_key_bindings fish_vi_key_bindings
 
