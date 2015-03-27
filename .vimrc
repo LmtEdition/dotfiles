@@ -235,6 +235,7 @@ filetype plugin indent on    " required
     " Faster escape in insert mode
     inoremap jk <ESC>
 
+    " Copy visual vim text to system clipboard with "+y
     vnoremap <leader>y "+y
 
     " Yank from cursor to the end of the line, to be consistent with C and D.
