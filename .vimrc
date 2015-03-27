@@ -9,6 +9,7 @@ call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
 Plug 'kien/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'sjl/gundo.vim'
 Plug 'Yggdroot/indentLine'
 "Plug 'tomasr/molokai'

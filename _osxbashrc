@@ -172,3 +172,5 @@ fi
 if [ -d "$HOME/bin" ] ; then
    export PATH="$HOME/bin:$PATH"
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
