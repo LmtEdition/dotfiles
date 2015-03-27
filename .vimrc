@@ -14,6 +14,7 @@ Plug 'Yggdroot/indentLine'
 "Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'rstacruz/sparkup',    { 'for': 'html' }
 Plug 'scrooloose/syntastic'
 Plug 'godlygeek/tabular',   { 'on': 'Tabularize' }
@@ -33,6 +34,7 @@ Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'mhinz/vim-tmuxify'
+Plug 'tpope/vim-unimpaired'
 Plug 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -176,9 +178,10 @@ filetype plugin indent on    " required
 
     " Sane indentation on pastes
     " Note: set paste will mess up plugin indentation when on
-    nnoremap <F2> :set invpaste paste?<CR>
-    set pastetoggle=<F2>
-    au InsertLeave * set nopaste " Leave paste mode on exit
+    " @Deprecated Now using vim-unimpaired *yo* and *yO*.
+    "nnoremap <F2> :set invpaste paste?<CR>
+    "set pastetoggle=<F2>
+    "au InsertLeave * set nopaste " Leave paste mode on exit
 " }
 
 " GUI Settings {
@@ -228,7 +231,9 @@ filetype plugin indent on    " required
     " Change the mapleader from default \ to ,
     let mapleader=','
 
-    " Copy visual vim text to system clipboard with "+y
+    " Faster escape in insert mode
+    inoremap jk <ESC>
+
     vnoremap <leader>y "+y
 
     " Yank from cursor to the end of the line, to be consistent with C and D.
