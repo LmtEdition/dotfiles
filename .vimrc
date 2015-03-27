@@ -256,6 +256,9 @@ filetype plugin indent on    " required
     nnoremap j gj
     nnoremap k gk
 
+    " Diff the current (split) files in window
+    nnoremap <leader>wd :windo diffthis<CR>
+
     " Find merge conflict markers
     map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
 
