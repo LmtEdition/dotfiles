@@ -241,7 +241,7 @@ filetype plugin indent on    " required
     nnoremap Y y$
 
     " Unhighlight searches
-    nmap <silent> <leader>/ :nohlsearch<CR>
+    nnoremap <silent> <leader>/ :nohlsearch<CR>
 
     " Search for visual selection
     vnoremap // y/<C-R>"<CR>
@@ -319,9 +319,12 @@ filetype plugin indent on    " required
     "nmap <leader>m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 
     " Remove trailing whitespace
+    nnoremap <leader>tw :%s/\s\+$//g<CR>
+
+    " Remove trailing whitespace and reformat tabs
     " If replacement fails, command exits before last save.
     " So save in the middle.
-    nmap <leader>tw gg=G:retab<CR>``:w<CR>:%s/\s\+$//g<CR>:w<CR>
+    nnoremap <leader>rt gg=G:retab<CR>``:w<CR>:%s/\s\+$//g<CR>:w<CR>
 
     " For local replace
     nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
@@ -407,6 +410,9 @@ filetype plugin indent on    " required
 
 " fzf - fuzzy finder {
     if isdirectory(expand("~/.fzf"))
+      " Shorcut for :FZF
+      nnoremap <silent> <Leader>fzf :FZF<CR>
+
       " Use locate command as source for fzf
       command! -nargs=1 Locate call fzf#run(
           \ {'source': 'locate <q-args>', 'sink': 'e', 'options': '-m'})
@@ -490,7 +496,7 @@ filetype plugin indent on    " required
       function! AgHandler(l)
         let keys = split(a:l,':')
         execute 'tabe +' . keys[-2] . ' ' . escape(keys[-1], ' ')
-      endfunction 
+      endfunction
 
       function! Arghandler(l)
         return "ag -i " . a:l . " | sed 's@\\(.[^:]*\\):\\(.[^:]*\\):\\(.*\\)@\\3:\\2:\\1@' "
@@ -501,6 +507,7 @@ filetype plugin indent on    " required
           \'sink' : function('AgHandler'),
           \'options' : '-m'
           \})
+      nnoremap <Leader>fza :AgFZF<SPACE>
 
       " Fuzzy command line completion
       cnoremap <silent> <c-l> <c-\>eGetCompletions()<cr>
@@ -515,14 +522,14 @@ filetype plugin indent on    " required
         if isdirectory(expand(l:dirprefix))
           return join(a:prefix + map(fzf#run({
                       \'options': a:options . ' --select-1  --query=' .
-                      \ a:rawdir[matchend(a:rawdir,"^.*/"):len(a:rawdir)], 
+                      \ a:rawdir[matchend(a:rawdir,"^.*/"):len(a:rawdir)],
                       \'dir': expand(l:dirprefix)
-                      \}), 
+                      \}),
                       \'"' . escape(l:dirprefix, " ") . '" . escape(v:val, " ")'))
         else
           return join(a:prefix + map(fzf#run({
                       \'options': a:options . ' --query='. a:rawdir }),
-                      \'escape(v:val, " ")')) 
+                      \'escape(v:val, " ")'))
           "dropped --select-1 to speed things up on a long query
       endfunction
 
@@ -537,15 +544,15 @@ filetype plugin indent on    " required
                     \ '^ed\=i\=t\=$\|^spl\=i\=t\=$\|^tabed\=i\=t\=$\|^arged\=i\=t\=$\|^vsp\=l\=i\=t\=$'
                     "single-argument file commands
           return CmdLineDirComplete(l:Prefix, "",l:cmdline_list[-1])
-        elseif len(l:Prefix) > 0 && l:Prefix[0] =~ 
-                    \ '^arg\=s\=$\|^ne\=x\=t\=$\|^sne\=x\=t\=$\|^argad\=d\=$'  
+        elseif len(l:Prefix) > 0 && l:Prefix[0] =~
+                    \ '^arg\=s\=$\|^ne\=x\=t\=$\|^sne\=x\=t\=$\|^argad\=d\=$'
                     "multi-argument file commands
           return CmdLineDirComplete(l:Prefix, '--multi', l:cmdline_list[-1])
         else
           return join(l:Prefix + fzf#run({
-                      \'source':l:FZF_Cmd_Completion_List, 
+                      \'source':l:FZF_Cmd_Completion_List,
                       \'options': '--select-1 --query='.shellescape(l:cmdline_list[-1])
-                      \})) 
+                      \}))
         endif
       endfunction
 " }
