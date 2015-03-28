@@ -231,8 +231,9 @@ filetype plugin indent on    " required
     " Change the mapleader from default \ to ,
     let mapleader=','
 
-    " Faster escape in insert mode
+    " Faster escape
     inoremap jk <ESC>
+    cnoremap jk <C-c>
 
     " Copy visual vim text to system clipboard with "+y
     vnoremap <leader>y "+y
@@ -281,28 +282,41 @@ filetype plugin indent on    " required
     map zl zL
     map zh zH
 
+    " Moving lines {
+      nnoremap <silent> <C-k> [e
+      nnoremap <silent> <C-j> ]e
+      nnoremap <silent> <C-h> <<
+      nnoremap <silent> <C-l> >>
+      xnoremap <silent> <C-k> [egv
+      xnoremap <silent> <C-j> ]egv
+      xnoremap <silent> <C-h> <gv
+      xnoremap <silent> <C-l> >gv
+      xnoremap < <gv
+      xnoremap > >gv
+    " }
+
     " Buffer management {
-        " Opens a new buffer with the current buffer's path
-        map <leader>e :edit <c-r>=expand("%:p:h")<CR>/
+      " Opens a new buffer with the current buffer's path
+      map <leader>e :edit <c-r>=expand("%:p:h")<CR>/
 
-        " Switch CWD to the directory of the open buffer
-        map <leader>cd :cd %:p:h<CR>:pwd<CR>
+      " Switch CWD to the directory of the open buffer
+      map <leader>cd :cd %:p:h<CR>:pwd<CR>
 
-        " Close the current buffer
-        map <leader>x :bd<CR>
+      " Close the current buffer
+      map <leader>x :bd<CR>
 
-        " Close all the buffers
-        map <leader>bw :1,1000 bd!<CR>
+      " Close all the buffers
+      map <leader>bw :1,1000 bd!<CR>
 
-        " Show a selectable list of buffers
-        map gb :ls<CR>:buffer<Space>
+      " Show a selectable list of buffers
+      map gb :ls<CR>:buffer<Space>
 
-        " Easy buffer switching
-        map <leader>n :bn<CR>
-        map <leader>p :bp<CR>
+      " Easy buffer switching
+      map <leader>n :bn<CR>
+      map <leader>p :bp<CR>
 
-        " Toggle between last open buffers
-        nnoremap <leader>6 <C-^>
+      " Toggle between last open buffers
+      nnoremap <leader>6 <C-^>
     " }
 
     " Instead of <S-;> can just type ;
@@ -334,6 +348,21 @@ filetype plugin indent on    " required
 
     " Toggle spell check
     nnoremap <leader>sc :set spell!<CR>
+
+    " Google search
+    function! s:goog()
+      let url = 'https://www.google.com/#q='
+      " Excerpt from vim-unimpaired
+      let q = substitute(
+            \ '"'.@0.'"',
+            \ '[^A-Za-z0-9_.~-]',
+            \ '\="%".printf("%02X", char2nr(submatch(0)))',
+            \ 'g')
+      call system('open ' . url . q)
+    endfunction
+
+    xnoremap <leader>? y:call <SID>goog()<CR>
+    nnoremap <leader>? :call system('open https://www.google.com')<CR>
 " }
 
 
