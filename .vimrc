@@ -248,10 +248,10 @@ filetype plugin indent on    " required
     vnoremap // y/<C-R>"<CR>
 
     " Easier window navigation
-    map <C-h> <C-w>h
-    map <C-j> <C-w>j
-    map <C-k> <C-w>k
-    map <C-l> <C-w>l
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
 
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
@@ -283,10 +283,6 @@ filetype plugin indent on    " required
     map zh zH
 
     " Moving lines {
-      nnoremap <silent> <C-k> [e
-      nnoremap <silent> <C-j> ]e
-      nnoremap <silent> <C-h> <<
-      nnoremap <silent> <C-l> >>
       xnoremap <silent> <C-k> [egv
       xnoremap <silent> <C-j> ]egv
       xnoremap <silent> <C-h> <gv
