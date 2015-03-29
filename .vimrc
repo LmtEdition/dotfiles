@@ -482,15 +482,10 @@ filetype plugin indent on    " required
       nnoremap <silent> <Leader>fzm :FZFMru<CR>
 
       " Jump to tags
-      function! TagCommand()
-        return substitute('awk _!/^!/ { print \$1 }_ ', '_', "'", 'g')
-                    \ . join(tagfiles(), ' ')
-      endfunction
-
-      command! FZFTag call fzf#run({
-      \   'source'     : TagCommand(),
-      \   'sink'       : 'tag',
-      \   })
+      command! FZFTag if !empty(tagfiles()) | call fzf#run({
+      \   'source': "sed '/^\\!/d;s/\t.*//' " . join(tagfiles()) . ' | uniq',
+      \   'sink':   'tag',
+      \ }) | else | echo 'No tags' | endif
       nnoremap <silent> <Leader>fzt :FZFTag<CR>
 
       " Search lines in all open vim buffers
@@ -765,7 +760,8 @@ filetype plugin indent on    " required
       nnoremap <leader>ge :Gedit<CR>
       nnoremap <leader>gl :Glog<CR>
       nnoremap <leader>gm :Gmove<SPACE>
-      nnoremap <leader>gp :Gpush<CR>
+      nnoremap <leader>gpl :Gpull<CR>
+      nnoremap <leader>gps :Gpush<CR>
       nnoremap <leader>gr :Gread<CR>
       nnoremap <leader>gs :Gstatus<CR>
       nnoremap <leader>gw :Gwrite<CR>
