@@ -421,6 +421,9 @@ filetype plugin indent on    " required
         nnoremap <C-p><C-b> :CtrlPBuffer<CR> " Fuzzy find through buffers
         nnoremap <C-p><C-m> :CtrlPMRU<CR>    " Fuzzy find through MRU files
         nnoremap <C-p><C-t> :CtrlPTag<CR>    " Fuzzy find through tags file
+
+        " Set maximum number of results
+        let g:ctrlp_match_window = 'results:30'
     endif
 " }
 
