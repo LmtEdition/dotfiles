@@ -16,6 +16,12 @@ fi
   git config --global merge.conflictstyle diff3
   git config --global mergetool.prompt false
   git config --global mergetool.keepBackup false # Don't keep .orig files.
+
+  # Use vimdiff for git diff
+  git config --global diff.tool vimdiff
+  git config --global difftool.prompt false
+  git config --global alias.d diff
+  git config --global alias.dt difftool
 # }
 
 # Global ignore {
