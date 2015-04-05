@@ -10,7 +10,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'kien/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'Yggdroot/indentLine'
 "Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdcommenter'
@@ -306,10 +306,6 @@ filetype plugin indent on    " required
 
       " Show a selectable list of buffers
       map gb :ls<CR>:buffer<Space>
-
-      " Easy buffer switching
-      map <leader>n :bn<CR>
-      map <leader>p :bp<CR>
 
       " Toggle between last open buffers
       nnoremap <leader>6 <C-^>
@@ -800,10 +796,10 @@ filetype plugin indent on    " required
     " Behave like *, use word boundaries
     let g:multi_cursor_start_word_key='<C-n>'
 
-    " Hitting ESC will go to Normal mode
+    " Hitting ESC will go to Normal mode instead of quitting
     let g:multi_cursor_exit_from_visual_mode=0
 
-    " Hitting ESC will go to Normal mode
+    " Hitting ESC will go to Normal mode instead of quitting
     let g:multi_cursor_exit_from_insert_mode=0
 
   endif
