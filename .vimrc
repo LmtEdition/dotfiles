@@ -1,12 +1,18 @@
-" Stan's vimrc
-" See https://github.com/spf13/spf13-vim for guide
-set nocompatible               " be iMproved
-filetype off                   " required!
+" Stan's vimrc.
+" See https://github.com/spf13/spf13-vim for guide.
+set nocompatible          " Be iMproved.
+filetype plugin indent on " Turn on filetype plugins.
 
-" vim-plug to manage plugins
-call plug#begin('~/.vim/plugged')
+" vim-plug to manage plugins.
+if has('nvim')
+  let s:config_dir = '~/.nvim'
+else
+  let s:config_dir = '~/.vim'
+endif
+let s:plugin_dir = s:config_dir . '/plugged'
 
-" Make sure you use single quotes
+silent! if plug#begin(s:plugin_dir)
+
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
@@ -36,56 +42,54 @@ Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'mhinz/vim-tmuxify'
 Plug 'tpope/vim-unimpaired'
-Plug 'Valloric/YouCompleteMe'
+"Plug 'Valloric/YouCompleteMe'
 
-" All of your Plugins must be added before the following line
 call plug#end()
-filetype plugin indent on    " required
+endif
 
 " Brief help
 " :PlugInstall    - Installs plugins
 " :PlugUpdate     - Install or update plugins
 " :PlugClean[!]   - confirms removal of unused plugins;
 "                   append `!` to auto-approve removal
-" :PlugUpgrade    - Upgrade vim- plug itself
+" :PlugUpgrade    - Upgrade vim-plug itself
 " :PlugStatus     - Check the status of plugins
 " :PlugDiff       - See the updated changes from the previous PlugUpdate
 " :PlugSnapshot   - Generate script for restoring current snapshot of plugins
 
 
 " General {
-    set shell=/bin/bash  " Fish is non POSIX compatible; for plugin support
+    set shell=/bin/bash  " Fish is non POSIX compatible; for plugin support.
     function! GetRunningOS()
-      if has("win32")
-        return "Windows"
+      if has('win32')
+        return 'Windows'
       endif
-      if has("unix")
+      if has('unix')
         if system('uname')=~'Darwin'
-          return "Darwin"
+          return 'Darwin'
         else
-          return "Linux"
+          return 'Linux'
         endif
       endif
     endfunction
-    let os=GetRunningOS()
+    let s:os=GetRunningOS()
 
-    syntax enable        " Syntax highlighting
-    set background=dark  " Assume a dark background
-    "set mouse=a          " Automatically enable mouse usage, I don't know why this is useful
-    set mousehide        " Hide the mouse cursor while typing
-    scriptencoding utf-8 " Set encoding for this script
-    set encoding=utf-8   " Set file encoding to utf-8
+    syntax enable        " Syntax highlighting.
+    set background=dark  " Assume a dark background.
+    set mouse=a          " Automatically enable mouse usage, I don't know why this is useful.
+    set mousehide        " Hide the mouse cursor while typing.
+    set encoding=utf-8   " Set file encoding to utf-8.
 
-    set shortmess+=filmnrxoOtT " Abbrev. of messages (avoids 'hit enter')
-    set history=1000           " Allow more history (default is 20)
-    set hidden                 " Allow switching edited buffers without saving
+    set shortmess+=filmnrxoOtT " Abbrev. of messages (avoids 'hit enter').
+    set history=1000           " Allow more history (default is 20).
+    set hidden                 " Allow switching edited buffers without saving.
 
     " Instead of reverting the cursor to the last position in the buffer, we
-    " set it to the first line when editing a git commit message
+    " set it to the first line when editing a git commit message.
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
-    " Jump to the last position when reopening a file
-    if has("autocmd")
+    " Jump to the last position when reopening a file.
+    if has('autocmd')
         au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
 
@@ -124,7 +128,7 @@ filetype plugin indent on    " required
         " Broken down into easily includeable segments
         set statusline=%<%f\                         " Filename
         set statusline+=%w%h%m%r                     " Options
-        if isdirectory(expand("~/.vim/plugged/vim-fugitive/"))
+        if isdirectory(expand('~/.vim/plugged/vim-fugitive/'))
             set statusline+=%{fugitive#statusline()} " Git Hotness
         endif
         set statusline+=\ [%{&ff}/%Y]                " Filetype
@@ -190,7 +194,7 @@ filetype plugin indent on    " required
     "highlight nonText ctermbg=NONE
 
     if has('gui_running')
-        if os=="Darwin"
+        if s:os == 'Darwin'
           set fullscreen " Start graphical vim in full screen mode
           set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14
         else
@@ -398,7 +402,7 @@ filetype plugin indent on    " required
 
 
 " ctrlp.vim - full path fuzzy file, buffer, mru, tag finder {
-    if isdirectory(expand("~/.vim/plugged/ctrlp.vim/"))
+    if isdirectory(expand('~/.vim/plugged/ctrlp.vim/'))
         " Set ctrlp's local working directory to the nearest ancestor
         " containing .git, .hg, .svn (option r). If none found, then fallback
         " to the directory of the current file (option a).
@@ -425,7 +429,7 @@ filetype plugin indent on    " required
 
 
 " delimitMate - auto close quotes, parentheses, brackets, etc. {
-    if isdirectory(expand("~/.vim/plugged/delimitMate"))
+    if isdirectory(expand('~/.vim/plugged/delimitMate'))
         " Expand on return key so that the next line is indented on enter
         let delimitMate_expand_cr = 1
     endif
@@ -433,7 +437,7 @@ filetype plugin indent on    " required
 
 
 " fzf - fuzzy finder {
-    if isdirectory(expand("~/.fzf"))
+    if isdirectory(expand('~/.fzf'))
       " Shorcut for :FZF
       nnoremap <silent> <Leader>fzf :FZF<CR>
 
@@ -578,7 +582,7 @@ filetype plugin indent on    " required
 
 
 " indentLine - display vertical lines for indentation level {
-    if isdirectory(expand("~/.vim/plugged/indentLine"))
+    if isdirectory(expand('~/.vim/plugged/indentLine'))
         let g:indentLine_color_term = 239
         let g:indentLine_color_gui = '#4e4e4e'
         let g:indentLine_char = '┊'
@@ -587,7 +591,7 @@ filetype plugin indent on    " required
 
 
 " gundo.vim - graphical undo tree {
-    if isdirectory(expand("~/.vim/plugged/gundo.vim"))
+    if isdirectory(expand('~/.vim/plugged/gundo.vim'))
       nnoremap <leader>ut :GundoToggle<CR>
 
       " Force preview window below current windows for more space
@@ -600,7 +604,7 @@ filetype plugin indent on    " required
 
 
 " nerdtree - filesystem explorer {
-    if isdirectory(expand("~/.vim/plugged/nerdtree"))
+    if isdirectory(expand('~/.vim/plugged/nerdtree'))
         nmap <leader>nt :NERDTreeToggle<CR>
         nmap <leader>nf :NERDTreeFind<CR>
 
@@ -646,7 +650,7 @@ filetype plugin indent on    " required
 
 
 " syntastic - syntax checking {
-    if isdirectory(expand("~/.vim/plugged/syntastic"))
+    if isdirectory(expand('~/.vim/plugged/syntastic'))
         let g:syntastic_check_on_open = 1 " Syntax check on buffer load and save
 
         let g:syntastic_aggregate_errors = 1 " Run all checkers for filetype
@@ -664,7 +668,7 @@ filetype plugin indent on    " required
 
 
 " tabular - auto-align text {
-    if isdirectory(expand("~/.vim/plugged/tabular"))
+    if isdirectory(expand('~/.vim/plugged/tabular'))
         nmap <leader>a& :Tabularize /&<CR>
         vmap <leader>a& :Tabularize /&<CR>
         nmap <leader>a= :Tabularize /=<CR>
@@ -686,14 +690,14 @@ filetype plugin indent on    " required
 
 
 " tagbar - displays tags of current file in sidebar {
-    if isdirectory(expand("~/.vim/plugged/tagbar/"))
+    if isdirectory(expand('~/.vim/plugged/tagbar/'))
         nmap <F8> :TagbarToggle<CR>
     endif
 " }
 
 
 " ultisnips - expand key triggers into full snippets {
-    if isdirectory(expand("~/.vim/plugged/ultisnips"))
+    if isdirectory(expand('~/.vim/plugged/ultisnips'))
         " Allow ultisnips to work with youcompleteme
         let g:UltiSnipsExpandTrigger='<C-j>'
         let g:UltiSnipsJumpForwardTrigger='<C-j>'
@@ -706,14 +710,14 @@ filetype plugin indent on    " required
 
 
 " vim-airline - pretty status line {
-    if isdirectory(expand("~/.vim/plugged/vim-airline/"))
+    if isdirectory(expand('~/.vim/plugged/vim-airline/'))
         let g:airline_powerline_fonts = 1
     endif
 "}
 
 
 " vim-colors-solarized - Solarized colorscheme {
-    if isdirectory(expand("~/.vim/plugged/vim-colors-solarized/"))
+    if isdirectory(expand('~/.vim/plugged/vim-colors-solarized/'))
       call togglebg#map("<F5>") " <F-5> to toggle between solarized light/dark
 
       " If using ssh, set terminal properties for better colors
@@ -739,7 +743,7 @@ filetype plugin indent on    " required
 
 
 " vim-fugitive - Git wrapper {
-    if isdirectory(expand("~/.vim/plugged/vim-fugitive"))
+    if isdirectory(expand('~/.vim/plugged/vim-fugitive'))
       " Add current file to staging
       nnoremap <leader>ga :Git add %:p<CR><CR>
 
@@ -778,7 +782,7 @@ filetype plugin indent on    " required
 
 
 " vim-gitgutter - display git diff signs {
-    if isdirectory(expand("~/.vim/plugged/vim-gitgutter"))
+    if isdirectory(expand('~/.vim/plugged/vim-gitgutter'))
         " Escape grep since we've aliased grep to ag
         let g:gitgutter_escape_grep = 1
 
@@ -789,7 +793,7 @@ filetype plugin indent on    " required
 
 
 " vim-multiple-cursors - Multiple selections and editing {
-  if isdirectory(expand("~/.vim/plugged/vim-multiple-cursors"))
+  if isdirectory(expand('~/.vim/plugged/vim-multiple-cursors'))
     " Behave like g*, no word boundaries
     let g:multi_cursor_start_key='g<C-n>'
 
@@ -807,7 +811,7 @@ filetype plugin indent on    " required
 
 
 " vim-startify - start fancy fresh vim {
-    if isdirectory(expand("~/.vim/plugged/vim-startify"))
+    if isdirectory(expand('~/.vim/plugged/vim-startify'))
         " Don't change into directory of selected file so that ag searching
         " will work across subdirectories
         let g:startify_change_to_dir = 0
@@ -817,7 +821,7 @@ filetype plugin indent on    " required
 
 
 " vim-tmuxify - bridge between vim and tmux {
-    if isdirectory(expand("~/.vim/plugged/vim-tmuxify"))
+    if isdirectory(expand('~/.vim/plugged/vim-tmuxify'))
       " Custom tmux create command
       let g:tmuxify_custom_command = 'tmux split-window -d -p 25'
     endif
@@ -825,7 +829,7 @@ filetype plugin indent on    " required
 
 
 " YouCompleteMe - autocomplete {
-    if isdirectory(expand("~/.vim/plugged/YouCompleteMe"))
+    if isdirectory(expand('~/.vim/plugged/YouCompleteMe'))
         " Enable completion from tags
         let g:ycm_collect_identifiers_from_tags_files = 1
 
