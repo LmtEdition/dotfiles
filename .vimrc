@@ -206,17 +206,17 @@ endif
     "set guioptions-=T " Remove the toolbar
     set lines=40      " 40 lines of text instead of 24
   else
+    "if has('nvim')
+      "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    "else
     " Allow 256 color setting here or in .bashrc: 'export TERM="xterm-256color"'
     if &term == 'xterm' || &term == 'screen'
       set t_Co=256 " Enable 256 colors.
     endif
   endif
 
-  " Colors if terminal support 256 colors or in GVIM.
-  if &t_Co >= 256 || has('gui_running')
-    colorscheme solarized
-    highlight clear SignColumn " solarized has bad sign column color.
-  endif
+  colorscheme solarized
+  highlight clear SignColumn " solarized has bad sign column color.
 
   " Sets a column border.
   if exists('+colorcolumn')
