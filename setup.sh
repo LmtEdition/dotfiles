@@ -116,7 +116,7 @@ DOT_PATH=$(pwd)
 
 
 # Tmux {
-  if [ $"FRESH_INSTALL" = true ]; then
+  if [ "$FRESH_INSTALL" = true ]; then
     if [ $(uname) == "Darwin" ]; then
       brew install tmux
     elif [ $(uname) == "Linux" ]; then
@@ -126,14 +126,25 @@ DOT_PATH=$(pwd)
 # }
 
 
-# Vim {
-  # Use vim-plug manager https://github.com/junegunn/vim-plug
+# [Neo]vim {
+  # Install Neovim.
+  if [ "$FRESH_INSTALL" = true ]; then
+    if [ $(uname) == "Darwin" ]; then
+      brew tap neovim/homebrew-neovim
+      brew install --HEAD neovim
+    elif [ $(uname) == "Linux" ]; then
+      :
+    fi
+  fi
 
-  # Create undodir if it doesn't exist
+  # Use vim-plug manager https://github.com/junegunn/vim-plug.
+
+  # Create undodir if it doesn't exist.
   mkdir -p ~/.vim/undodir
+  mkdir -p ~/.nvim/undodir
 
   # Run ctags -R to create tags file.
-  if [ $"FRESH_INSTALL" = true ]; then
+  if [ "$FRESH_INSTALL" = true ]; then
     if [ $(uname) == "Darwin" ]; then
       brew install ctags-exuberant
     elif [ $(uname) == "Linux" ]; then
@@ -141,16 +152,16 @@ DOT_PATH=$(pwd)
     fi
   fi
 
-  # Powerline fonts for vim-airline
+  # Powerline fonts for vim-airline.
   # Run the install.sh script and set the terminal's profile to use
   # the powerline font.
-  if [ $"FRESH_INSTALL" = true ]; then
+  if [ "$FRESH_INSTALL" = true ]; then
     git clone https://github.com/powerline/fonts.git ~/fonts.git
     cd ~/fonts.git && ./install.sh
   fi
 
-  # Ag - faster grep
-  if [ $"FRESH_INSTALL" = true ]; then
+  # Ag - faster grep.
+  if [ "$FRESH_INSTALL" = true ]; then
     if [ $(uname) == "Darwin" ]; then
       brew install the_silver_searcher
     elif [ $(uname) == "Linux" ]; then
