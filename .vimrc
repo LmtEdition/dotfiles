@@ -42,7 +42,7 @@ Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'mhinz/vim-tmuxify'
 Plug 'tpope/vim-unimpaired'
-"Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe'
 
 call plug#end()
 endif
@@ -696,15 +696,15 @@ endif
 
 
 " ultisnips - expand key triggers into full snippets {
-    if isdirectory(expand(s:plugin_dir . '/ultisnips'))
-        " Allow ultisnips to work with youcompleteme
-        let g:UltiSnipsExpandTrigger='<C-j>'
-        let g:UltiSnipsJumpForwardTrigger='<C-j>'
-        let g:UltiSnipsJumpBackwardTrigger='<C-k>'
+  if isdirectory(expand(s:plugin_dir . '/ultisnips'))
+    " Allow ultisnips to work with YouCompleteMe.
+    let g:UltiSnipsExpandTrigger='<C-j>'
+    let g:UltiSnipsJumpForwardTrigger='<C-j>'
+    let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
-        " Allow ultisnips to list snippets
-        let g:UltiSnipsListSnippets='<C-l>'
-    endif
+    " Allow ultisnips to list snippets.
+    let g:UltiSnipsListSnippets='<C-l>'
+  endif
 " }
 
 
@@ -828,29 +828,29 @@ endif
 
 
 " YouCompleteMe - autocomplete {
-    if isdirectory(expand(s:plugin_dir . '/YouCompleteMe'))
-        " Enable completion from tags
-        let g:ycm_collect_identifiers_from_tags_files = 1
+  if isdirectory(expand(s:plugin_dir . '/YouCompleteMe'))
+    " Enable completion from tags.
+    let g:ycm_collect_identifiers_from_tags_files = 1
 
-        "let g:ycm_global_ycm_extra_conf =
-            "\ s:plugin_dir . '/YouCompleteMe/.ycm_extra_conf.py'
+    "let g:ycm_global_ycm_extra_conf =
+        "\ s:plugin_dir . '/YouCompleteMe/.ycm_extra_conf.py'
 
-        " Enable omni completion.
-        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-        autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-        autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
-        " If not using YCM's clang semantic completer and want to use
-        " Syntastic's gcc checker
-        let g:ycm_show_diagnostics_ui = 0
+    " If not using YCM's clang semantic completer and want to use
+    " Syntastic's gcc checker.
+    let g:ycm_show_diagnostics_ui = 0
 
-        " If not working in cpp, this makes YCM faster
-        let g:ycm_filetype_specific_completion_to_disable = {'cpp': 1, 'c': 1}
-    endif
+    " If not working in cpp, this makes YCM faster.
+    let g:ycm_filetype_specific_completion_to_disable = {'cpp': 1, 'c': 1}
+  endif
 " }
 
 
