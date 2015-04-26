@@ -76,7 +76,7 @@ endif
 
   syntax enable        " Syntax highlighting.
   set background=dark  " Assume a dark background.
-  set mouse=a          " Automatically enable mouse usage, I don't know why this is useful.
+  "set mouse=a          " Automatically enable mouse usage, I don't know why this is useful.
   set mousehide        " Hide the mouse cursor while typing.
   set encoding=utf-8   " Set file encoding to utf-8.
 
