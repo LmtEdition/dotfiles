@@ -117,9 +117,6 @@ fi
 # Enable 256 colors in terminal
 export TERM="screen-256color"
 
-# Use Solarized dark dircolors
-eval `dircolors $HOME/.dir_colors/dircolors.ansi-dark`
-
 # Typing a dir in cmd-line will cd into it
 shopt -s autocd
 
@@ -147,14 +144,15 @@ _completemarks() {
 
 complete -F _completemarks jump unmark
 
-# Vi alias for vim
-alias vi='vim'
-
 # Force tmux to use 256 color
 alias tmux='tmux -2'
 
 # Set default text editor to vim
-export EDITOR=vim
+if [ -f "$HOME/.linuxbrew/bin/nvim" ]; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
 
 # Put failed history substition back on commandline
 # http://www.catonmat.net/blog/the-definitive-guide-to-bash-command-line-history/
@@ -176,6 +174,16 @@ fi
 
 if [ -d "/opt/local/libexec/gnubin" ] ; then
    export PATH="/opt/local/libexec/gnubin:$PATH"
+fi
+
+if [ -d "$HOME/.linuxbrew/bin" ]; then
+  export PATH="$HOME/.linuxbrew/bin:$PATH"
+fi
+if [ -d "$HOME/.linuxbrew/man" ]; then
+  export MANPATH="$HOME/.linuxbrew/man:$MANPATH"
+fi
+if [ -d "$HOME/.linuxbrew/info" ]; then
+  export INFOPATH="$HOME/.linuxbrew/info:$INFOPATH"
 fi
 
 if [ -d "$HOME/bin" ] ; then

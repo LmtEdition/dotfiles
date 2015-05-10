@@ -134,14 +134,15 @@ _completemarks() {
 
 complete -F _completemarks jump unmark
 
-# Vi alias for vim
-alias vi='vim'
-
 # Force tmux to use 256 color
 alias tmux='tmux -2'
 
 # Set default text editor to vim
-export EDITOR=vim
+if [ -f "$HOME/homebrew/bin/nvim" ]; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
 
 # Put failed history substition back on commandline
 # http://www.catonmat.net/blog/the-definitive-guide-to-bash-command-line-history/
@@ -167,6 +168,12 @@ fi
 
 if [ -d "$HOME/homebrew/bin" ]; then
   export PATH="$HOME/homebrew/bin:$PATH"
+fi
+if [ -d "$HOME/homebrew/man" ]; then
+  export MANPATH="$HOME/homebrew/man:$MANPATH"
+fi
+if [ -d "$HOME/homebrew/info" ]; then
+  export INFOPATH="$HOME/homebrew/info:$INFOPATH"
 fi
 
 if [ -d "$HOME/bin" ] ; then

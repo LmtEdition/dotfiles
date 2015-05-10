@@ -1,5 +1,12 @@
 # Config file for fish shell.
 
+if [ -d "$HOME/homebrew" ]
+  set HOMEBREW_PREFIX "$HOME/homebrew"
+else
+  set HOMEBREW_PREFIX "$HOME/.linuxbrew"
+end
+
+# Check if we're not in a tmux session to avoid duplicate path exports.
 # set PATH so it includes MacPorts sbin if it exists
 if [ -z $TMUX ]; and [ -d "/opt/local/sbin" ]
   set -x PATH "/opt/local/sbin" $PATH
@@ -13,12 +20,22 @@ if [ -z $TMUX ]; and [ -d "/opt/local/libexec/gnubin" ]
   set -x PATH "/opt/local/libexec/gnubin" $PATH
 end
 
-if [ -z $TMUX ]; and [ -d "$HOME/homebrew/bin" ]
-  set -x PATH "$HOME/homebrew/bin" $PATH
+if [ -z $TMUX ]; and [ -d "$HOMEBREW_PREFIX/bin" ]
+  set -x PATH "$HOMEBREW_PREFIX/bin" $PATH
+end
+if [ -z $TMUX ]; and [ -d "$HOMEBREW_PREFIX/man" ]
+  set -x MANPATH "$HOMEBREW_PREFIX/man" $MANPATH
+end
+if [ -z $TMUX ]; and [ -d "$HOMEBREW_PREFIX/info" ]
+  set -x INFOPATH "$HOMEBREW_PREFIX/info" $INFOPATH
 end
 
 if [ -z $TMUX ]; and [ -d "$HOME/bin" ]
   set -x PATH "$HOME/bin" $PATH
+end
+
+if [ -z $TMUX ]; and [ -d "$HOME/Dropbox/Coursera/princeton_algorithms" ]
+  set -x PATH $HOME/Dropbox/Coursera/princeton_algorithms/bin $PATH
 end
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -49,24 +66,26 @@ set -x GREP_OPTIONS "--color=auto"
 set -x GREP_COLOR "3;33"
 
 set -x LESS "--ignore-case --raw-control-chars"
-set -x EDITOR "vim"
+if [ -f "$HOMEBREW_PREFIX/bin/nvim" ]
+  set -x EDITOR "nvim"
+else
+  set -x EDITOR "vim"
+end
 
 set -x LC_ALL en_US.UTF-8
 set -x LANG en_US.UTF-8
 set -x LANGUAGE en_US.UTF-8
 
-if [ -z $TMUX ]; and [ -d "$HOME/Dropbox/Coursera/princeton_algorithms" ]
-  set -x PATH $HOME/Dropbox/Coursera/princeton_algorithms/bin $PATH
+if [ -f ~/.fzf/bin/fzf ]
+  # Use ag as the default source for fzf
+  set -x FZF_DEFAULT_COMMAND 'ag -l -g ""'
+
+  # Use extended-search mode
+  set -x FZF_DEFAULT_OPTS "-x"
 end
 
-# Use ag as the default source for fzf
-set -x FZF_DEFAULT_COMMAND 'ag -l -g ""'
-
-# Use extended-search mode
-set -x FZF_DEFAULT_OPTS "-x"
-
 # Set vi-keybindings
-set -g fish_key_bindings fish_vi_key_bindings
+#set -g fish_key_bindings fish_vi_key_bindings
 
 source $HOME/.config/fish/aliases.fish
 source $HOME/.config/fish/solarized.fish

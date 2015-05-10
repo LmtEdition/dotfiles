@@ -22,9 +22,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'rstacruz/sparkup',    { 'for': 'html' }
+Plug 'rstacruz/sparkup', { 'for': 'html' }
 Plug 'scrooloose/syntastic'
-Plug 'godlygeek/tabular',   { 'on': 'Tabularize' }
+Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 Plug 'majutsushi/tagbar'
 Plug 'SirVer/ultisnips'
 Plug 'bling/vim-airline'
@@ -42,7 +42,7 @@ Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'mhinz/vim-tmuxify'
 Plug 'tpope/vim-unimpaired'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 
 call plug#end()
 endif

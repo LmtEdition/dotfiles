@@ -10,6 +10,24 @@ fi
 
 DOT_PATH=$(pwd)
 
+
+# OSX - Homebrew, Homebrew Cask, iTerm2, MacVim {
+  # Turn off system sound at startup
+  if [ "$FRESH_INSTALL" = true ]; then
+    if [ $(uname) == "Darwin" ]; then
+      mkdir ~/homebrew && curl -L https://github.com/Homebrew/homebrew/tarball/master | tar xz --strip 1 -C ~/homebrew
+      sudo nvram SystemAudioVolume=%80
+    elif [ $(uname) == "Linux" ]; then
+      # Linuxbrew: http://brew.sh/linuxbrew/
+      # Installs to ~/.linuxbrew
+      sudo apt-get install build-essential curl git m4 ruby texinfo libbz2-dev libcurl4-openssl-dev libexpat-dev libncurses-dev zlib1g-dev
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+      sudo apt-get install build-essential
+    fi
+  fi
+# }
+
+
 # Dot files {
   # bashrc file
   if [ $(uname) == "Darwin" ]; then
@@ -28,6 +46,9 @@ DOT_PATH=$(pwd)
       ln -sv "$full_file" ~/
     fi
   done
+
+  # Neovim config.
+  ln -sv $DOT_PATH/.vimrc ~/.nvimrc
 # }
 
 
@@ -35,14 +56,17 @@ DOT_PATH=$(pwd)
   # http://www.fishshell.com
   # Nightly builds - latest version https://github.com/fish-shell/fish-shell/wiki/Nightly-builds
   if [ "$FRESH_INSTALL" = true ]; then
+    # NOTE: Add $HOME/homebrew/bin/fish to /etc/shells
     if [ $(uname) == "Darwin" ]; then
       brew install fish --HEAD
       chsh -s $HOME/homebrew/bin/fish
     elif [ $(uname) == "Linux" ]; then
-      sudo add-apt-repository ppa:fish-shell/nightly-master
-      sudo apt-get update
-      sudo apt-get install fish
-      chsh -s /usr/bin/fish
+      brew install fish --HEAD
+      chsh -s $HOME/.linuxbrew/bin/fish
+      # sudo add-apt-repository ppa:fish-shell/nightly-master
+      # sudo apt-get update
+      # sudo apt-get install fish
+      # chsh -s /usr/bin/fish
     fi
   fi
 
@@ -56,6 +80,7 @@ DOT_PATH=$(pwd)
   done
 
   # $ fish_config to set classic+git prompt and solarized dark theme
+  # $ fish_update_completions to add manpage completions.
 
   # Download z.fish for smarter change directory
   # https://github.com/roryokane/z-fish to ~/.config/fish/functions/z.fish
@@ -67,16 +92,6 @@ DOT_PATH=$(pwd)
 # }
 
 
-# OSX - Homebrew, Homebrew Cask, iTerm2, MacVim {
-  # Turn off system sound at startup
-  if [ "$FRESH_INSTALL" = true ]; then
-    if [ $(uname) == "Darwin" ]; then
-      sudo nvram SystemAudioVolume=%80
-    fi
-  fi
-# }
-
-
 # Solarized Colorscheme {
   # https://github.com/altercation/solarized
   # Solarized dark for Gnome terminal {
@@ -84,19 +99,21 @@ DOT_PATH=$(pwd)
     # Select the dark theme.
     # https://github.com/Anthony25/gnome-terminal-colors-solarized
     if [ "$FRESH_INSTALL" = true ] && [ $(uname) == "Linux" ]; then
-      git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git
+      GNOME_SOLARIZED_DIR="$HOME/gnome-terminal-colors-solarized"
+      git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git "$GNOME_SOLARIZED_DIR"
       sudo apt-get install dconf-cli
-      cd ~/gnome-terminal-colors-solarized/ && ./install.sh
+      cd "$GNOME_SOLARIZED_DIR" && ./install.sh
     fi
   # }
 
   # Solarized for GNU ls {
+    # NOTE: gnome-terminal-colors-solarized install.sh includes dircolors,
+    # so no need for this step on Ubuntu.
     # https://github.com/seebi/dircolors-solarized
     # Download the dircolors.256dark by seebi
     # Link the file to ~/.dir_colors and include the following line in
     # your ~/.profile (bash) or ~/.zshrc (zsh)
     # eval `dircolors ~/.dir_colors/dircolors.256dark`
-    # Note: I now include the file in my dotfiles repo and symlink it.
   # }
 
   # Solarized for OSX {
@@ -105,23 +122,19 @@ DOT_PATH=$(pwd)
 
   # Solarized for tmux {
     # https://github.com/altercation/solarized/tree/master/tmux
-    # Included in my .tmux.conf file.
+    # NOTE: Included in my .tmux.conf file.
   # }
 
   # Solarized for vim {
     # https://github.com/altercation/solarized/blob/master/vim-colors-solarized/
-    # Included in my .vimrc plugin manager.
+    # NOTE: Included in my .vimrc plugin manager.
   # }
 # }
 
 
 # Tmux {
   if [ "$FRESH_INSTALL" = true ]; then
-    if [ $(uname) == "Darwin" ]; then
-      brew install tmux
-    elif [ $(uname) == "Linux" ]; then
-      sudo apt-get install tmux
-    fi
+    brew install tmux
   fi
 # }
 
@@ -129,27 +142,35 @@ DOT_PATH=$(pwd)
 # [Neo]vim {
   # Install Neovim.
   if [ "$FRESH_INSTALL" = true ]; then
-    if [ $(uname) == "Darwin" ]; then
-      brew tap neovim/homebrew-neovim
-      brew install --HEAD neovim
-    elif [ $(uname) == "Linux" ]; then
-      :
+    if [ $(uname) == "Linux" ]; then
+      sudo apt-get install python-setuptools libtool
     fi
+    brew tap neovim/homebrew-neovim
+    brew install --HEAD neovim
+
+    # Python 2 support for neovim.
+    sudo apt-get install python-dev python-pip
+    sudo pip install neovim
   fi
 
   # Use vim-plug manager https://github.com/junegunn/vim-plug.
+  if [ "$FRESH_INSTALL" = true ]; then
+    curl -fLo ~/.nvim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  fi
 
   # Create undodir if it doesn't exist.
-  mkdir -p ~/.vim/undodir
+  #mkdir -p ~/.vim/undodir
   mkdir -p ~/.nvim/undodir
 
   # Run ctags -R to create tags file.
   if [ "$FRESH_INSTALL" = true ]; then
-    if [ $(uname) == "Darwin" ]; then
-      brew install ctags-exuberant
-    elif [ $(uname) == "Linux" ]; then
-      sudo apt-get install exuberant-ctags
-    fi
+    brew install ctags-exuberant
+  fi
+
+  # Ag - faster grep.
+  if [ "$FRESH_INSTALL" = true ]; then
+    brew install the_silver_searcher
   fi
 
   # Powerline fonts for vim-airline.
@@ -158,14 +179,5 @@ DOT_PATH=$(pwd)
   if [ "$FRESH_INSTALL" = true ]; then
     git clone https://github.com/powerline/fonts.git ~/fonts.git
     cd ~/fonts.git && ./install.sh
-  fi
-
-  # Ag - faster grep.
-  if [ "$FRESH_INSTALL" = true ]; then
-    if [ $(uname) == "Darwin" ]; then
-      brew install the_silver_searcher
-    elif [ $(uname) == "Linux" ]; then
-      sudo apt-get install silversearcher-ag
-    fi
   fi
 # }
