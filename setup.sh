@@ -93,6 +93,8 @@ DOT_PATH=$(pwd)
   # Gnome terminal {
     # Fullscreen: set the Default terminal size in Profile Preferences go
     # something very large.
+
+    # Font: Droid Sans Mono for Powerline
   # }
 # }
 
