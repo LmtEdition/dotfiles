@@ -80,7 +80,7 @@ if [ -f ~/.fzf/bin/fzf ]
 end
 
 # Set vi-keybindings
-#set -g fish_key_bindings fish_vi_key_bindings
+fish_vi_mode
 
 source $HOME/.config/fish/aliases.fish
 source $HOME/.config/fish/solarized.fish
