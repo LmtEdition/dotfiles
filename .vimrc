@@ -98,7 +98,7 @@ endif
 
   " Save undo history
   if has('persistent_undo')
-    let &undodir = s:config_dir . '/undodir/' " Put undo files in one place.
+    let &undodir = expand(s:config_dir . '/undodir/') " Put undo files in one place.
     set undofile         " Allow persistent undo.
     set undolevels=1000  " Maximum number of changes that can be undone.
     set undoreload=10000 " Maximum number lines to save for undo on a buffer reload.
