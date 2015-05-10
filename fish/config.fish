@@ -23,12 +23,6 @@ end
 if [ -z $TMUX ]; and [ -d "$HOMEBREW_PREFIX/bin" ]
   set -x PATH "$HOMEBREW_PREFIX/bin" $PATH
 end
-if [ -z $TMUX ]; and [ -d "$HOMEBREW_PREFIX/man" ]
-  set -x MANPATH "$HOMEBREW_PREFIX/man" $MANPATH
-end
-if [ -z $TMUX ]; and [ -d "$HOMEBREW_PREFIX/info" ]
-  set -x INFOPATH "$HOMEBREW_PREFIX/info" $INFOPATH
-end
 
 if [ -z $TMUX ]; and [ -d "$HOME/bin" ]
   set -x PATH "$HOME/bin" $PATH
@@ -68,6 +62,7 @@ set -x GREP_COLOR "3;33"
 set -x LESS "--ignore-case --raw-control-chars"
 if [ -f "$HOMEBREW_PREFIX/bin/nvim" ]
   set -x EDITOR "nvim"
+  alias vim='nvim'
 else
   set -x EDITOR "vim"
 end

@@ -56,17 +56,14 @@ DOT_PATH=$(pwd)
   # http://www.fishshell.com
   # Nightly builds - latest version https://github.com/fish-shell/fish-shell/wiki/Nightly-builds
   if [ "$FRESH_INSTALL" = true ]; then
-    # NOTE: Add $HOME/homebrew/bin/fish to /etc/shells
     if [ $(uname) == "Darwin" ]; then
+      # NOTE: Add $HOME/homebrew/bin/fish to /etc/shells
       brew install fish --HEAD
       chsh -s $HOME/homebrew/bin/fish
     elif [ $(uname) == "Linux" ]; then
+      # NOTE: Add $HOME/.linuxbrew/bin/fish to /etc/shells
       brew install fish --HEAD
       chsh -s $HOME/.linuxbrew/bin/fish
-      # sudo add-apt-repository ppa:fish-shell/nightly-master
-      # sudo apt-get update
-      # sudo apt-get install fish
-      # chsh -s /usr/bin/fish
     fi
   fi
 
@@ -89,6 +86,14 @@ DOT_PATH=$(pwd)
     filename=$(basename "$full_file")
     ln -sv "$full_file" ~/.config/fish/functions/$filename
   done
+# }
+
+
+# Terminals {
+  # Gnome terminal {
+    # Fullscreen: set the Default terminal size in Profile Preferences go
+    # something very large.
+  # }
 # }
 
 
@@ -160,7 +165,7 @@ DOT_PATH=$(pwd)
   fi
 
   # Create undodir if it doesn't exist.
-  #mkdir -p ~/.vim/undodir
+  mkdir -p ~/.vim/undodir
   mkdir -p ~/.nvim/undodir
 
   # Run ctags -R to create tags file.

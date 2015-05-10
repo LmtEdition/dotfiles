@@ -169,12 +169,6 @@ fi
 if [ -d "$HOME/homebrew/bin" ]; then
   export PATH="$HOME/homebrew/bin:$PATH"
 fi
-if [ -d "$HOME/homebrew/man" ]; then
-  export MANPATH="$HOME/homebrew/man:$MANPATH"
-fi
-if [ -d "$HOME/homebrew/info" ]; then
-  export INFOPATH="$HOME/homebrew/info:$INFOPATH"
-fi
 
 if [ -d "$HOME/bin" ] ; then
    export PATH="$HOME/bin:$PATH"

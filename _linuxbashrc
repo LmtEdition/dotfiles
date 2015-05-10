@@ -179,12 +179,6 @@ fi
 if [ -d "$HOME/.linuxbrew/bin" ]; then
   export PATH="$HOME/.linuxbrew/bin:$PATH"
 fi
-if [ -d "$HOME/.linuxbrew/man" ]; then
-  export MANPATH="$HOME/.linuxbrew/man:$MANPATH"
-fi
-if [ -d "$HOME/.linuxbrew/info" ]; then
-  export INFOPATH="$HOME/.linuxbrew/info:$INFOPATH"
-fi
 
 if [ -d "$HOME/bin" ] ; then
    export PATH="$HOME/bin:$PATH"
