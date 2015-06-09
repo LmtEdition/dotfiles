@@ -148,6 +148,9 @@ fi
 # http://www.catonmat.net/blog/the-definitive-guide-to-bash-command-line-history/
 shopt -s histreedit
 
+# Save history across shell instances.
+export PROMPT_COMMAND="history -a; history -n"
+
 # Set up UTF-8 environment
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
