@@ -65,7 +65,7 @@ esac
 if [ -x /opt/local/libexec/gnubin/dircolors ]; then
     alias dircolors=/opt/local/libexec/gnubin/dircolors
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls --color=auto -F'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
 
