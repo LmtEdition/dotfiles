@@ -117,10 +117,10 @@ DOT_PATH=$(pwd)
     # NOTE: gnome-terminal-colors-solarized install.sh includes dircolors,
     # so no need for this step on Ubuntu.
     # https://github.com/seebi/dircolors-solarized
-    # Download the dircolors.256dark by seebi
+    # Download the dircolors.ansi-dark by seebi
     # Link the file to ~/.dir_colors and include the following line in
     # your ~/.profile (bash) or ~/.zshrc (zsh)
-    # eval `dircolors ~/.dir_colors/dircolors.256dark`
+    # eval `dircolors ~/.dir_colors/dircolors.ansi-dark`
   # }
 
   # Solarized for OSX {
