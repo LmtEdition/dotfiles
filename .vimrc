@@ -466,18 +466,72 @@ endif
 
     " Simple MRU search.
     command! FZFMru call fzf#run({
-          \'source': v:oldfiles,
-          \'sink' : 'e ',
-          \'options' : '-m',
-          \})
+    \ 'source':  s:all_files(),
+    \ 'sink':    'edit',
+    \ 'options': '-m -x +s',
+    \ 'down':    '40%' })
+
+    function! s:all_files()
+      return extend(
+      \ filter(copy(v:oldfiles),
+      \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+      \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
+    endfunction
     nnoremap <silent> <Leader>fzm :FZFMru<CR>
 
     " Jump to tags.
-    command! FZFTag if !empty(tagfiles()) | call fzf#run({
+    command! -bar FZFTag if !empty(tagfiles()) | call fzf#run({
     \   'source': "sed '/^\\!/d;s/\t.*//' " . join(tagfiles()) . ' | uniq',
     \   'sink':   'tag',
     \ }) | else | echo 'No tags' | endif
+    "\ }) | else | echo 'Preparing tags' | call system('ctags -R') | FZFTag | endif
     nnoremap <silent> <Leader>fzt :FZFTag<CR>
+
+    " Tags in the current buffer.
+    function! s:align_lists(lists)
+      let maxes = {}
+      for list in a:lists
+        let i = 0
+        while i < len(list)
+          let maxes[i] = max([get(maxes, i, 0), len(list[i])])
+          let i += 1
+        endwhile
+      endfor
+      for list in a:lists
+        call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
+      endfor
+      return a:lists
+    endfunction
+
+    function! s:btags_source()
+      let lines = map(split(system(printf(
+        \ 'ctags -f - --sort=no --excmd=number --language-force=%s %s',
+        \ &filetype, expand('%:S'))), "\n"), 'split(v:val, "\t")')
+      if v:shell_error
+        throw 'failed to extract tags'
+      endif
+      return map(s:align_lists(lines), 'join(v:val, "\t")')
+    endfunction
+
+    function! s:btags_sink(line)
+      execute split(a:line, "\t")[2]
+    endfunction
+
+    function! s:btags()
+      try
+        call fzf#run({'source':  s:btags_source(),
+                    \'down':    '40%',
+                    \'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+                    \'sink':    function('s:btags_sink')})
+      catch
+        echohl WarningMsg
+        echom v:exception
+        echohl None
+      endtry
+    endfunction
+
+    command! BTags call s:btags()
+    nnoremap <silent> <Leader>fzc :BTags<CR>
 
     " Search lines in all open vim buffers.
     function! s:line_handler(l)
@@ -504,21 +558,42 @@ endif
     nnoremap <silent> <Leader>fzl :FZFLines<CR>
 
     " Narrow ag results within vim.
-    function! AgHandler(l)
-      let keys = split(a:l,':')
-      execute 'tabe +' . keys[-2] . ' ' . escape(keys[-1], ' ')
+    function! s:ag_to_qf(line)
+      let parts = split(a:line, ':')
+      return {'filename': parts[0], 'lnum': parts[1], 'col': parts[2],
+            \ 'text': join(parts[3:], ':')}
     endfunction
 
-    function! Arghandler(l)
-      return "ag -i " . a:l . " | sed 's@\\(.[^:]*\\):\\(.[^:]*\\):\\(.*\\)@\\3:\\2:\\1@' "
+    function! s:ag_handler(lines)
+      if len(a:lines) < 2 | return | endif
+
+      let cmd = get({'ctrl-x': 'split',
+                  \ 'ctrl-v': 'vertical split',
+                  \ 'ctrl-t': 'tabe'}, a:lines[0], 'e')
+      let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
+
+      let first = list[0]
+      execute cmd escape(first.filename, ' %#\')
+      execute first.lnum
+      execute 'normal!' first.col.'|zz'
+
+      if len(list) > 1
+        call setqflist(list)
+        copen
+        wincmd p
+      endif
     endfunction
 
-    command! -nargs=1 AgFZF call fzf#run({
-        \'source': Arghandler(<f-args>),
-        \'sink' : function('AgHandler'),
-        \'options' : '-m'
-        \})
-    nnoremap <Leader>fza :AgFZF<SPACE>
+    command! -nargs=* Ag call fzf#run({
+    \ 'source':  printf('ag --nogroup --column --color "%s"',
+    \                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
+    \ 'sink*':    function('<sid>ag_handler'),
+    \ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.
+    \            '--multi --bind ctrl-a:select-all,ctrl-d:deselect-all '.
+    \            '--color hl:68,hl+:110',
+    \ 'down':    '50%'
+    \ })
+    nnoremap <Leader>fza :Ag<SPACE>
 
     " Fuzzy command line completion.
     cnoremap <silent> <c-l> <c-\>eGetCompletions()<cr>
