@@ -707,10 +707,10 @@ endif
     vnoremap <leader>k y:grep! "\b<C-R>"\b"<CR>:cw<CR>
 
     " Define new command to search for provided text and open 'quickfix'
-    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+    "command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
     " bind \ (backward slash) to grep shortcut
-    nnoremap \ :Ag<SPACE>
+    "nnoremap \ :Ag<SPACE>
 " }
 
 
