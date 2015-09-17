@@ -12,6 +12,9 @@ DOT_PATH=$(pwd)
 
 
 # OSX - Homebrew, Homebrew Cask, iTerm2, MacVim {
+# Add this to ~/.bash_profile:
+#   if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+# b/c OSX treats interactive shells as login shell.
   # Turn off system sound at startup
   if [ "$FRESH_INSTALL" = true ]; then
     if [ $(uname) == "Darwin" ]; then
