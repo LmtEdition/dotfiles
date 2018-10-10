@@ -79,9 +79,13 @@ if [ -f ~/.fzf/bin/fzf ]
   set -x FZF_DEFAULT_OPTS "-x"
 end
 
-# Set vi-keybindings
-fish_vi_mode
+# Set vi-keybindings, can't use fzf functions though.
+fish_vi_key_bindings
 
-source $HOME/.config/fish/aliases.fish
-source $HOME/.config/fish/solarized.fish
+#source $HOME/.config/fish/aliases.fish
+#source $HOME/.config/fish/solarized.fish
+
+. $HOME/.config/fish/aliases.fish
+. $HOME/.config/fish/solarized.fish
+
 
